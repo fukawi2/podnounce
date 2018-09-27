@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <base href="{{@SCHEME}}://{{@HOST}}:{{@PORT}}{{@BASE}}/" />
+
+  <!-- Create title for browser tabs & Favorites -->
+  <title>{{ @PAGE.TITLE }} | {{ @PACKAGE }}</title>
+  <!-- This site is responsive. Use full screen width. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Ensure use of most common Unicode characters -->
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/assets/css/spectre.min.css">
+  <link rel="stylesheet" href="/assets/css/spectre-exp.min.css">
+  <link rel="stylesheet" href="/assets/css/spectre-icons.min.css">
+
+  <style>
+    .column li { list-style: none; color: red; margin-top: 0; margin-bottom: 0; }
+  </style>
+</head>
+<body>
+  <header class="navbar" style="padding: 1rem; box-shadow: 2px 2px 2px lightgrey;">
+    <!-- Logo, here on the left -->
+    <section class="navbar-primary">
+      <a href="{{ 'home' | alias }}" class="navbar-brand"><span class="text-large">{{ @PACKAGE }}</span></a>
+    </section>
+    <section class="navbar-section">
+      <check if="@SESSION.USER">
+      <a href="{{ 'episode_new' | alias }}" class="btn btn-link">Publish</a>
+      <a href="{{ 'settings' | alias }}" class="btn btn-link">Settings</a>
+      </check>
+      <a href="{{ 'show_index' | alias }}" class="btn btn-link">Shows</a>
+      <a href="{{ 'home' | alias }}" class="btn btn-success">Home</a>
+    </section>
+  </header>
+
+  <div class="container centered grid-lg">
+    <div class="column">
+      <check if="{{ @PAGE.HEADER }}"><h1 class="text-center" style="margin-top: 5%;">{{ @PAGE.HEADER | raw }}</h1></check>
+      <include href="toast.htm" if="{{@SESSION.TOAST.msg}}">
+    </div>
+    <include href="{{ @PAGE.CONTENT }}" />
+  </div><!--  .container -->
+
+  <!-- FOOTER -->
+  <footer>
+  <div id='footer' class="columns text-center">
+    <div class="column">
+      <a href="{{ 'login' | alias }}" class="btn btn-link">Login</a>
+      <check if="@SESSION.USER"><a href="{{ 'logout' | alias }}" class="btn btn-link">Logout {{@SESSION.USER.user_id}}</a></check>
+      <p>
+        &copy; Phillip Smith. Licensed under <a href="{{ 'license' | alias }}">MIT License</a>.
+        <include href="debug.htm" if="{{ @DEBUG > 0 }}">
+      </p>
+    </div>
+  </div>
+  </footer>
+  <!-- END FOOTER -->
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!-- DEBUG TEMPLATE ELEMENT -->
+<div class='toast toast-warning'>
+  <h3>DEBUG ENABLED</h3>
+  <p>
+  DATABASE: {{@database.dbname}}@{{@database.host}}<br/>
+  Page rendered in {{ round(1e3*(microtime(TRUE)-$TIME),2) }} msecs / Memory usage {{ round(memory_get_usage(TRUE)/1e3,1) }} Kibytes
+  </p>
+</div>
+<!-- Guru Meditation Below Here -->
+<div class="columns">
+  <div class="column col-12 text-center">
+    <kbd>Guru Meditation</kbd>
+  </div>
+  <div class="column col-4 col-mx-auto">
+    <pre class="code" data-lang="Trace"><code><span class="com">{{ @ERROR.trace | raw }}</code></pre>
+  </div>
+  <div class="column col-8 col-mx-auto">
+    <pre class="code" data-lang="SQL Log"><code><span class="com">{{ wordwrap(@DB->log(), 80) | raw }}</code></pre>
+  </div>
+</div>
+<!-- /DEBUG TEMPLATE ELEMENT -->
