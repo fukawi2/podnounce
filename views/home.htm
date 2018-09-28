@@ -6,6 +6,14 @@
   explicit boolean NOT NULL,
   guid uuid NOT NULL,
 -->
+<check if="@intro">
+<div class='columns'>
+  <div class='column col-12'>
+    <p>{{ nl2br(@intro) }}</p>
+  </div>
+</div>
+</check>
+
 <check if="@episodes">
 <true>
 <table class="table table-hover">
