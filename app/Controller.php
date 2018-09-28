@@ -37,7 +37,7 @@ class Controller {
     // check user authentication
     if (preg_match('|^/admin|', $f3->get('PATTERN'))) {
       if (!$f3->exists('SESSION.USER'))
-        $this->Authenticate();
+        $f3->reroute('@login');
     }
 
   }

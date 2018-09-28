@@ -30,6 +30,10 @@
       </check>
       <a href="{{ 'show_index' | alias }}" class="btn btn-link">Shows</a>
       <a href="{{ 'home' | alias }}" class="btn btn-success">Home</a>
+      <check if="@SESSION.USER">
+      <true><a href="{{ 'logout' | alias }}" class="btn btn-link">Logout</a></true>
+      <false><a href="{{ 'login' | alias }}" class="btn btn-link">Login</a></false>
+      </check>
     </section>
   </header>
 
@@ -45,12 +49,10 @@
   <footer>
   <div id='footer' class="columns text-center">
     <div class="column">
-      <a href="{{ 'login' | alias }}" class="btn btn-link">Login</a>
-      <check if="@SESSION.USER"><a href="{{ 'logout' | alias }}" class="btn btn-link">Logout {{@SESSION.USER.user_id}}</a></check>
       <p>
-        &copy; Phillip Smith. Licensed under <a href="{{ 'license' | alias }}">MIT License</a>.
-        <include href="debug.htm" if="{{ @DEBUG > 0 }}">
+        &copy; Copyright 2018 Phillip Smith.<br/>Licensed under <a href="{{ 'license' | alias }}">MIT License</a>.
       </p>
+      <include href="debug.htm" if="{{ @DEBUG > 0 }}">
     </div>
   </div>
   </footer>

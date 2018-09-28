@@ -19,26 +19,6 @@ Class Home extends Controller {
     echo 'TODO';
   }
 
-  function Login($f3, $params) {
-    // the controller beforeroute() function takes care of doing the
-    // authentication, so this just needs to bounce the user back to
-    // the home page
-    if ($f3->exists('SESSION.USER')) {
-      $f3->set('SESSION.TOAST.msg', 'Welcome back '.$f3->get('SESSION.USER.user_id'));
-      $f3->set('SESSION.TOAST.class', 'success');
-    }
-    $f3->reroute('@home');
-  }
-
-  function Logout($f3, $params) {
-    if ($f3->exists('SESSION.USER')) {
-      $f3->clear('SESSION.USER');
-      $f3->set('SESSION.TOAST.msg', 'You have been logged out.');
-      $f3->set('SESSION.TOAST.class', 'success');
-    }
-    $f3->reroute('@home');
-  }
-
   function License($f3,$params) {
     $f3->set('PAGE.TITLE', 'License');
     $f3->set('PAGE.HEADER', 'MIT License');
