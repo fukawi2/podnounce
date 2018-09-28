@@ -2,6 +2,25 @@
 
 class Controller {
 
+  public $iTunesCategories = array(
+    'Arts' => array('Design','Fashion & Beauty','Food','Literature','Performing Arts','Visual Arts'),
+    'Business' => array('Business News','Careers','Investing','Management & Marketing','Shopping'),
+    'Comedy' => null,
+    'Education' => array('Education Technology','Higher Education','K-12','Language Courses','Training'),
+    'Games & Hobbies' => array('Automotive','Aviation','Hobbies','Other Games','Video Games'),
+    'Government & Organizations' => array('Local','National','Non-Profit','Regional'),
+    'Health' => array('Alternative Health','Fitness & Nutrition','Self-Help','Sexuality'),
+    'Kids & Family' => null,
+    'Music' => null,
+    'News & Politics' => null,
+    'Religion & Spirituality' => array('Buddhism','Christianity','Hinduism','Islam','Judaism','Other','Spirituality'),
+    'Science & Medicine' => array('Medicine','Natural Sciences','Social Sciences'),
+    'Society & Culture' => array('History','Personal Journals','Philosophy','Places & Travel'),
+    'Sports & Recreation' => array('Amateur','College & High School','Outdoor','Professional'),
+    'Technology' => array('Gadgets','Podcasting','Software How-To','Tech News'),
+    'TV & Film' => null,
+  );
+
   function beforeRoute($f3,$params) {
     // initialize the session dbms handler
     $session = new DB\SQL\Session($f3->get('DB'));
