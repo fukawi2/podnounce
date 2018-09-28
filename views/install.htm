@@ -1,0 +1,84 @@
+<div class='col-8 col-sm-12 col-mx-auto'>
+  <form class="form-horizontal" method='post'>
+    <!-- NETWORK NAME -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="network_name">Network Name:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="network_name" name="network_name" placeholder="AAA Podcasts Inc" required>
+      </div>
+    </div>
+    <!-- ADMIN NAME -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="admin_name">Admin Name:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="admin_name" name="admin_name" placeholder="Mary Jones" required>
+      </div>
+    </div>
+    <!-- ADMIN EMAIL -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="admin_email">Admin Email:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="admin_email" name="admin_email" placeholder="admin@example.com" required>
+      </div>
+    </div>
+    <!-- CANONICAL URL -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="canonical_url">Canonical URL:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="canonical_url" name="canonical_url" placeholder="https://podcasts.example.com" value="{{@FULL_URL}}" required>
+      </div>
+    </div>
+    <!-- INTRO TEXT -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="intro_text">Home Page Introduction:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <textarea class="form-input" type="text" id="intro_text" name="intro_text" placeholder="Our podcasts are awesome!" rows="3"></textarea>
+      </div>
+    </div>
+    <!-- USERNAME -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="userid">Username:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="userid" name="userid" placeholder="admin" required>
+      </div>
+    </div>
+    <!-- PASSWORD -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="passwd1">Password:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="password" id="passwd1" name="passwd1" placeholder="Password" required>
+      </div>
+    </div>
+    <!-- PASSWORD CONFIRM -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="passwd2">Confirm Password:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="password" id="passwd2" name="passwd2" placeholder="Confirm Password" required>
+      </div>
+    </div>
+    <!-- SUBMIT BUTTON -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+      </div>
+      <div class="col-7 col-sm-12">
+        <button class="btn btn-primary input-group-btn">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>

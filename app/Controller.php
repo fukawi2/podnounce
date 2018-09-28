@@ -29,6 +29,11 @@ class Controller {
     if (!$f3->exists('SESSION.csrf_token'))
       $f3->set('SESSION.csrf_token', $session->csrf());
 
+    // check if we need to install
+    $db_user = new DB\SQL\Mapper($f3->get('DB'), 'users');
+    if (!preg_match('|^/install|', $f3->get('PATTERN')) and $db_user->count() == 0)
+      $f3->reroute('@install');
+
     // check user authentication
     if (preg_match('|^/admin|', $f3->get('PATTERN'))) {
       if (!$f3->exists('SESSION.USER'))
@@ -45,19 +50,14 @@ class Controller {
     return (!empty($str) ? $str : null);
   }
 
-  /*
-   * user authentication functions
-   */
-  function Authenticate() {
-    $f3 = Base::instance();
-    $db_user = new DB\SQL\Mapper($f3->get('DB'), 'users');
-    $auth = new \Auth($db_user, array('id'=>'user_id', 'pw'=>'passwd'));
-    // TODO: proper authentication, with password hashes!
-    if ($auth->basic()) {
-      $f3->set('SESSION.USER', $db_user->cast());
-      return true;
-    }
-    return false;
+  public function CheckPasswordQuality($p1, $p2) {
+    if ($p1 != $p2)
+      return 'Passwords do not match';
+
+    if (strlen($p1) < 8)
+      return 'Password must be at least 8 characters';
+
+    return true;
   }
 
 }
