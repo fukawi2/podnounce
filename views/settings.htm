@@ -1,0 +1,87 @@
+<div class='column col-10 col-sm-12 col-mx-auto'>
+  <form class="form-horizontal" method='post'>
+    <div class="column col-12">
+      <div class="divider text-center" data-content="General Settings"></div> 
+    </div>
+    <!-- NETWORK NAME -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="network_name">Network Name:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="network_name" name="network_name" placeholder="AAA Podcasts Inc" required value="{{@SETTINGS.network_name}}">
+      </div>
+    </div>
+    <!-- ADMIN NAME -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="admin_name">Admin Name:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="admin_name" name="admin_name" placeholder="Mary Jones" required value="{{@SETTINGS.admin_name}}">
+      </div>
+    </div>
+    <!-- ADMIN EMAIL -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="admin_email">Admin Email:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="admin_email" name="admin_email" placeholder="admin@example.com" required value="{{@SETTINGS.admin_email}}">
+      </div>
+    </div>
+    <!-- CANONICAL URL -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+        <label class="form-label" for="canonical_url">Canonical URL:</label>
+      </div>
+      <div class="col-7 col-sm-12">
+        <input class="form-input" type="text" id="canonical_url" name="canonical_url" placeholder="https://podcasts.example.com" required value="{{@SETTINGS.canonical_url}}">
+      </div>
+    </div>
+
+    <div class="column col-12">
+      <div class="divider text-center" data-content="Home Page"></div>
+    </div>
+    <!-- INTRO TEXT -->
+    <div class="form-group">
+      <div class="col-4 col-sm-12 text-right">
+        <label class="form-label" for="intro_text">Home Page Introduction:</label>
+      </div>
+      <div class="col-8 col-sm-12">
+        <textarea class="form-input" type="text" id="intro_text" name="intro_text" placeholder="Our podcasts are awesome!" rows="5">{{@SETTINGS.intro_text}}</textarea>
+        <sup>HTML Allowed</sup>
+      </div>
+    </div>
+    <!-- EP_DISPLAY_COUNT -->
+    <div class="form-group">
+      <div class="col-8 text-right">
+        <label class="form-label" for="ep_display_count">Number of recent episodes on Home Page:</label>
+      </div>
+      <div class="col-2">
+        <input class="form-input" type="number" id="ep_display_count" name="ep_display_count" value="{{@SETTINGS.ep_display_count}}" min="1" max="50">
+      </div>
+    </div>
+
+    <div class="column col-12">
+      <div class="divider text-center" data-content="Advanced"></div>
+    </div>
+    <!-- ANALYTICS CODE -->
+    <div class="form-group">
+      <div class="col-4 col-sm-12 text-right">
+        <label class="form-label" for="analytics_code">Analytics Code:</label>
+      </div>
+      <div class="col-8 col-sm-12">
+        <textarea class="form-input" type="text" id="analytics_code" name="analytics_code" placeholder="Insert your analystics code here (eg, Google Analytics)" rows="3">{{@SETTINGS.analytics_code}}</textarea>
+      </div>
+    </div>
+    <!-- SUBMIT BUTTON -->
+    <div class="form-group">
+      <div class="col-5 col-sm-12 text-right">
+      </div>
+      <div class="col-7 col-sm-12">
+        <button class="btn btn-primary input-group-btn">Update Settings</button>
+      </div>
+    </div>
+  </form>
+</div>

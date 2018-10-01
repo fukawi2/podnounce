@@ -1,9 +1,7 @@
 <!-- TOAST MESSAGE -->
-<div class='columns'>
-  <div class='column col-12 col-md-9 col-mx-auto'>
-    <div class="toast toast-{{@SESSION.TOAST.class}} text-center">
-      {{ nl2br(@SESSION.TOAST.msg) | raw}}
-    </div>
+<div class='column col-12 col-mx-auto'>
+  <div class="toast toast-{{@SESSION.TOAST.class}} text-center">
+    {{ nl2br(@SESSION.TOAST.msg) | raw}}
   </div>
 </div>
 <!-- END TOAST MESSAGE -->
