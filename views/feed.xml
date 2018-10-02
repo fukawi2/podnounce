@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+  <channel>
+    <title>{{ @show.title }}</title>
+    <link>{{@CANONICAL_URL}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link>
+    <language>en-us</language>
+    <itunes:subtitle>Subtitle of podcast</itunes:subtitle>
+    <itunes:author>{{ @show.author }}</itunes:author>
+    <itunes:summary>{{ @show.short_description }}</itunes:summary>
+    <description>{{ @show.short_description }}</description>
+    <itunes:owner>
+      <itunes:name>Owner Name</itunes:name>
+      <itunes:email>me@example.com</itunes:email>
+    </itunes:owner>
+    <itunes:explicit>{{ @show.explicit ? 'yes' : 'no' }}</itunes:explicit>
+    <itunes:image href="{{@CANONICAL_URL}}/{{ \Controller::GetMediaURLByID(@show.cover_art_id) }}" />
+<check if="@show.category_group">
+<true>
+    <itunes:category text="{{ @show.category_group }}">
+      <itunes:category text="{{ @show.category_name }}"/>
+    </itunes:category>
+</true>
+<false>
+    <itunes:category text="{{@show.category_name}}"/>
+</false>
+</check>
+
+<repeat group="{{ @episodes }}" value="{{ @item }}">
+    <!-- episode_id {{ @item.episode_id }} -->
+    <item>
+      <title>{{ sprintf('S%02dE%02d', @item.season_number, @item.episode_number) }} {{ @item.title }}</title>
+      <itunes:summary>{{ trim(@item.summary) }}</itunes:summary>
+      <description>{{ trim(@item.summary) }}</description>
+      <link>{{@CANONICAL_URL}}{{ 'show_by_id', 'show_id='.@show_id | alias }}</link>
+      <enclosure url="{{@CANONICAL_URL}}{{ 'episode_download', 'episode_id='.@item.episode_id | alias  }}" type="{{ @item.mime_type }}" length="{{ @item.media_bytes }}"></enclosure>
+      <pubDate>{{ date('D, j M Y h:i:s O', strtotime(@item.publish_ts)) }}</pubDate>
+      <itunes:author>{{ @show.author }}</itunes:author>
+      <itunes:duration>{{ @item.duration }}</itunes:duration>
+      <itunes:explicit>{{ @item.episode_explicit ? 'yes' : 'no' }}</itunes:explicit>
+      <guid isPermaLink="false">{{ @item.guid }}</guid>
+    </item>
+</repeat>
+  </channel>
+</rss>
