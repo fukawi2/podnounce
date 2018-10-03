@@ -13,13 +13,6 @@ $f3->set('UPLOADS', 'uploads/');
 $f3->config('app/routes.cfg');
 $f3->config('podnounce.conf');
 
-/*
- * password_hash() and password_verify() were introduced in version 5.5 so if
- * our version is too old, we use a compat file to emulate those functions
- */
-if (version_compare(PHP_VERSION, '5.5.0') < 0)
-  require(__DIR__.'/app/password.php');
-
 // establish connection to database
 $pdostr = sprintf('pgsql:host=%s;port=%s;dbname=%s',
                 $f3->get('database.host'),
