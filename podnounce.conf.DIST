@@ -1,0 +1,13 @@
+;
+; This file configures primarily the database connection parameters for
+; PodNounce to connect to. Most other configuration is stored in the database
+; itself.
+;
+
+[database]
+host=localhost
+port=5432
+dbname=REPLACE_ME
+username=REPLACE_ME
+password=REPLACE_ME
+locale=en_us.utf8
