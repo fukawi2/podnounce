@@ -1,0 +1,50 @@
+<check if="@SESSION.USER">
+<div class='column col-12'>
+  <p class='text-right'>
+    <a href="{{ 'show_new' | alias }}"><span class="label label-secondary label-rounded">Create New Show</span></a>
+  </p>
+</div>
+</check>
+
+<check if="@shows">
+<true>
+<repeat group="{{ @shows }}" value="{{ @item }}">
+<div class='column col-4 col-sm-6'>
+  <div class="card">
+    <div class="card-image">
+      <a href="{{ 'show_by_id', 'show_id='.@item.show_id | alias }}">
+        <img src="{{ \Controller::GetMediaURLByID(@item.cover_art_id) }}" class="img-responsive" alt="Cover Art for {{@item.title}}" />
+      </a>
+    </div>
+    <div class="card-header">
+      <div class="card-title h5">
+        <a href="{{ 'show_by_id', 'show_id='.@item.show_id | alias }}">{{ @item.title }}</a>
+      </div>
+      <div class="card-subtitle text-gray">
+        <div class='float-right'><a href="{{ 'show_feed', 'show_id='.@item.show_id | alias }}"><img src="assets/img/feed-icon-28x28.png" alt="RSS Feed for {{@item.title}}" title="Subscribe!" /></a></div>
+        {{ @item.author }}
+      </div>
+    </div>
+    <div class="card-body">
+      {{ @item.short_description }}
+    </div>
+    <div class="card-footer text-gray">
+      <sup>
+        <check if="@item.category_group">{{ @item.category_group }} &raquo; </check>{{ @item.category_name }}
+        <check if="@item.explicit"><span class="label label-warning label-rounded">EXPLICIT</span></check>
+        <br/>{{@item.episode_count}} episodes.
+      </sup>
+      <check if="@SESSION.USER">
+      <div class="float-right" id='admin_action'>
+        <a href="{{ 'show_edit', 'show_id='.@item.show_id | alias }}"><i class="icon icon-edit icon-2x" title="Edit"></i></a>
+      </div>
+      </check>
+    </div>
+  </div>
+</div>
+</repeat>
+</true>
+<false>
+<h3 class='text-center'>Sorry, no shows yet!</h3>
+</false>
+</check>

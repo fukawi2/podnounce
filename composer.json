@@ -1,6 +1,8 @@
 {
   "require": {
-    "bcosca/fatfree": "^3.5"
+    "bcosca/fatfree": "^3.5",
+    "erusev/parsedown": "1.*.*",
+    "ircmaxell/password-compat": "*"
   },
   "config": {
     "optimize-autoloader": true

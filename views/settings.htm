@@ -1,42 +1,75 @@
-<div class='column col-10 col-sm-12 col-mx-auto'>
-  <form class="form-horizontal" method='post'>
-    <div class="column col-12">
-      <div class="divider text-center" data-content="General Settings"></div> 
-    </div>
-    <!-- NETWORK NAME -->
-    <div class="form-group">
-      <div class="col-5 col-sm-12 text-right">
-        <label class="form-label" for="network_name">Network Name:</label>
+<div class='column col-12 col-mx-auto'>
+  <form class="form-horizontal" method='post' enctype="multipart/form-data">
+  <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}" />
+    <div class='column col-6 col-mx-auto'>
+      <div class="column col-12">
+        <div class="divider text-center" data-content="General Settings"></div> 
       </div>
-      <div class="col-7 col-sm-12">
-        <input class="form-input" type="text" id="network_name" name="network_name" placeholder="AAA Podcasts Inc" required value="{{@SETTINGS.network_name}}">
+      <!-- NETWORK NAME -->
+      <div class="form-group">
+        <div class="column col-5 col-sm-12 text-right">
+          <label class="form-label" for="network_name">Network Name:</label>
+        </div>
+        <div class="column col-7 col-sm-12">
+          <input class="form-input" type="text" id="network_name" name="network_name" placeholder="AAA Podcasts Inc" required value="{{@SETTINGS.network_name}}">
+        </div>
       </div>
-    </div>
-    <!-- ADMIN NAME -->
-    <div class="form-group">
-      <div class="col-5 col-sm-12 text-right">
-        <label class="form-label" for="admin_name">Admin Name:</label>
+      <!-- ADMIN NAME -->
+      <div class="form-group">
+        <div class="column col-5 col-sm-12 text-right">
+          <label class="form-label" for="admin_name">Admin Name:</label>
+        </div>
+        <div class="column col-7 col-sm-12">
+          <input class="form-input" type="text" id="admin_name" name="admin_name" placeholder="Mary Jones" required value="{{@SETTINGS.admin_name}}">
+        </div>
       </div>
-      <div class="col-7 col-sm-12">
-        <input class="form-input" type="text" id="admin_name" name="admin_name" placeholder="Mary Jones" required value="{{@SETTINGS.admin_name}}">
+      <!-- ADMIN EMAIL -->
+      <div class="form-group">
+        <div class="column col-5 col-sm-12 text-right">
+          <label class="form-label" for="admin_email">Admin Email:</label>
+        </div>
+        <div class="column col-7 col-sm-12">
+          <input class="form-input" type="text" id="admin_email" name="admin_email" placeholder="admin@example.com" required value="{{@SETTINGS.admin_email}}">
+        </div>
       </div>
-    </div>
-    <!-- ADMIN EMAIL -->
-    <div class="form-group">
-      <div class="col-5 col-sm-12 text-right">
-        <label class="form-label" for="admin_email">Admin Email:</label>
+      <!-- CANONICAL URL -->
+      <div class="form-group">
+        <div class="column col-5 col-sm-12 text-right">
+          <label class="form-label" for="canonical_url">Canonical URL:</label>
+        </div>
+        <div class="column col-7 col-sm-12">
+          <input class="form-input" type="text" id="canonical_url" name="canonical_url" placeholder="https://podcasts.example.com" required value="{{@SETTINGS.canonical_url}}">
+        </div>
       </div>
-      <div class="col-7 col-sm-12">
-        <input class="form-input" type="text" id="admin_email" name="admin_email" placeholder="admin@example.com" required value="{{@SETTINGS.admin_email}}">
+      <!-- NETWORK CATEGORY -->
+      <div class="form-group">
+        <div class="column col-5 col-sm-12 text-right">
+          <label class='form-label' for='network_category'>Network Category:</label>
+        </div>
+        <div class="column col-7 col-sm-12">
+          <select class="form-select" name='network_category' id='network_category' required>
+            <option disabled selected value> -- Select Category -- </option>
+            <repeat group="{{ @categories }}" key="{{ @key }}" value="{{ @item }}">
+              <optgroup label="{{ @key }}">
+                <repeat group="{{ @item }}" value="{{ @item }}">
+                <option value="{{ @item.category_id }}" {{ @item.category_id==@SETTINGS.network_category ? 'selected' : '' }}>{{ @item.category_name }}</option>
+                </repeat>
+              </optgroup>
+            </repeat>
+          </select>
+        </div>
       </div>
-    </div>
-    <!-- CANONICAL URL -->
-    <div class="form-group">
-      <div class="col-5 col-sm-12 text-right">
-        <label class="form-label" for="canonical_url">Canonical URL:</label>
-      </div>
-      <div class="col-7 col-sm-12">
-        <input class="form-input" type="text" id="canonical_url" name="canonical_url" placeholder="https://podcasts.example.com" required value="{{@SETTINGS.canonical_url}}">
+      <!-- NETWORK LOGO -->
+      <div class="form-group">
+        <div class="column col-5 col-sm-12 text-right">
+          <label class="form-label" for="network_logo">Network Logo:</label>
+        </div>
+        <div class="column col-7 col-sm-12">
+          <input class="form-input" name='network_logo' id="network_logo" type="file" accept=".jpg,.jpeg,.png">
+        </div>
+        <div class="column col-12">
+          <p><small>Square images look best. JPG or PNG image. Minimum 1400&times;1400 pixels and a maximum size of 3000&times;3000</small></p>
+        </div>
       </div>
     </div>
 
@@ -45,20 +78,20 @@
     </div>
     <!-- INTRO TEXT -->
     <div class="form-group">
-      <div class="col-4 col-sm-12 text-right">
+      <div class="column col-4 col-sm-12 text-right">
         <label class="form-label" for="intro_text">Home Page Introduction:</label>
       </div>
-      <div class="col-8 col-sm-12">
+      <div class="column col-8 col-sm-12">
         <textarea class="form-input" type="text" id="intro_text" name="intro_text" placeholder="Our podcasts are awesome!" rows="5">{{@SETTINGS.intro_text}}</textarea>
         <sup>HTML Allowed</sup>
       </div>
     </div>
     <!-- EP_DISPLAY_COUNT -->
     <div class="form-group">
-      <div class="col-8 text-right">
+      <div class="column col-8 text-right">
         <label class="form-label" for="ep_display_count">Number of recent episodes on Home Page:</label>
       </div>
-      <div class="col-2">
+      <div class="column col-2">
         <input class="form-input" type="number" id="ep_display_count" name="ep_display_count" value="{{@SETTINGS.ep_display_count}}" min="1" max="50">
       </div>
     </div>
@@ -68,20 +101,42 @@
     </div>
     <!-- ANALYTICS CODE -->
     <div class="form-group">
-      <div class="col-4 col-sm-12 text-right">
+      <div class="column col-4 col-sm-12 text-right">
         <label class="form-label" for="analytics_code">Analytics Code:</label>
       </div>
-      <div class="col-8 col-sm-12">
+      <div class="column col-8 col-sm-12">
         <textarea class="form-input" type="text" id="analytics_code" name="analytics_code" placeholder="Insert your analystics code here (eg, Google Analytics)" rows="3">{{@SETTINGS.analytics_code}}</textarea>
       </div>
     </div>
     <!-- SUBMIT BUTTON -->
     <div class="form-group">
-      <div class="col-5 col-sm-12 text-right">
-      </div>
-      <div class="col-7 col-sm-12">
+      <div class="column col-12 text-right">
         <button class="btn btn-primary input-group-btn">Update Settings</button>
       </div>
     </div>
   </form>
+</div>
+
+<!-- MAINTENANCE TASKS -->
+<div class='column col-12 text-center'>
+  <div class='columns'>
+    <div class="column col-12">
+      <div class="divider text-center" data-content="Maintenance Tasks"></div>
+    </div>
+    <!-- CHECK MEDIA -->
+    <div class='column col-4 col-sm-12 col-mx-auto'>
+      <p>
+        Check media will check for orphaned and missing media files.<br/>
+        <b>This will delete unused files.</b>
+      </p>
+      <button onclick="location.href='{{ 'check_media' | alias }}'" type="button" class='btn btn-sm'>Check Media</button>
+    </div>
+    <!-- Fix Durations -->
+    <div class='column col-4 col-sm-12 col-mx-auto'>
+      <p>
+        Calculate missing durations for audio files.
+      </p>
+      <button onclick="location.href='{{ 'fix_durations' | alias }}'" type="button" class='btn btn-sm'>Fix Durations</button>
+    </div>
+  </div>
 </div>

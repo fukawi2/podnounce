@@ -2,28 +2,27 @@
 
 Class Home extends Controller {
 
+  private $ep_display_count_default = 3;
+
   function Index($f3,$params) {
-    $db_episode = new DB\SQL\Mapper($f3->get('DB'), 'episodes');
+    $db_setting = new DB\SQL\Mapper($f3->get('DB'), 'settings');
+    $db_setting->load(array('setting=?','intro_text'));
+    $f3->set('intro', trim($db_setting->value));
+
+    $db_episode = new DB\SQL\Mapper($f3->get('DB'), 'firehose_feed');
+    $db_setting->load(array('setting=?','ep_display_count'));
+    $limit = ($db_setting->dry() ? $this->ep_display_count_default : $db_setting->value);
     $f3->set('episodes', $db_episode->find(
       array('publish_ts <= current_timestamp'),
-      array('order' => 'publish_ts')
+      array('order' => 'publish_ts DESC, episode_id DESC', 'limit' => $limit)
     ));
 
-    $f3->set('PAGE.TITLE', 'Home');
-    $f3->set('PAGE.HEADER', 'Welcome to '.$f3->get('PACKAGE'));
-    $f3->set('PAGE.CONTENT','home.htm');
-    echo \Template::instance()->render('layouts/default.htm');
-  }
-
-  function Settings($f3,$params) {
-    echo 'TODO';
+    $f3->set('show_network_logo', true);
+    $this->RenderPage('home.htm', 'Home', $f3->get('SETTINGS.network_name'));
   }
 
   function License($f3,$params) {
-    $f3->set('PAGE.TITLE', 'License');
-    $f3->set('PAGE.HEADER', 'MIT License');
-    $f3->set('PAGE.CONTENT','license.htm');
-    echo \Template::instance()->render('layouts/default.htm');
+    $this->RenderPage('license.htm', 'License', 'MIT License');
   }
 
 }

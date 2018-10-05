@@ -1,0 +1,48 @@
+<div class='column col-12 text-center text-gray'>
+  <sup><em>Episode {{ sprintf('S%02dE%02d', @episode.season_number, @episode.episode_number) }} of {{ @show.title }}</em></sup>
+</div>
+
+<div class="column col-12">
+  <div class="divider text-center"></div>
+</div>
+
+<!-- Audio Player -->
+<div class="column col-4 col-sm-12 col-mx-auto text-center">
+  <figure class="avatar avatar-xl centered">
+    <img src="{{ \Controller::GetMediaURLByID(@show.cover_art_id) }}" class="img-responsive" alt="Cover Art for {{@show.title}}" />
+  </figure>
+  <h4>Listen Now!</h4>
+  <audio controls="controls" src="{{ 'episode_download', 'episode_id='.@item.episode_id | alias }}">
+    Your browser does not support the HTML5 Audio element.
+  </audio>
+</div>
+
+<!-- DESKTOP SCREEN -->
+<div class='column col-8 hide-sm'>
+  <p>{{ nl2br(@episode.summary) }}</p>
+  <p class='text-gray'>
+    <sub>
+    Presented by {{ @show.author }}<br/>
+    Published {{ date('d M Y', strtotime(@item.publish_ts)) }}
+  </sub>
+  </p>
+</div>
+
+<!-- SMALL SCREEN (center the text) -->
+<div class='column col-12 show-sm text-center'>
+  <p>{{ nl2br(@episode.summary) }}</p>
+  <p class='text-gray'>
+    <sub>
+      {{ sprintf('S%02dE%02d', @episode.season_number, @episode.episode_number) }}<br/>
+    Presented by {{ @show.author }}<br/>
+    Published {{ date('d M Y', strtotime(@item.publish_ts)) }}
+  </sub>
+  </p>
+</div>
+
+<check if="@episode.show_notes">
+<div class='column col-12'>
+  <h4 class='text-center'>Show Notes</h4>
+  {{ Parsedown::instance()->text(@episode.show_notes) }}
+</div>
+</check>

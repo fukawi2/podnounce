@@ -21,7 +21,8 @@ $pdostr = sprintf('pgsql:host=%s;port=%s;dbname=%s',
 );
 $f3->set('DB', new DB\SQL($pdostr, $f3->get('database.username'), $f3->get('database.password')));
 
-// TODO: redirec to install page if DB is empty
+// initialize the session dbms handler
+$f3->set('sess', new DB\SQL\Session($f3->get('DB')));
 
 $f3->run();
 

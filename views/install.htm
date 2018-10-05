@@ -1,5 +1,6 @@
 <div class='col-8 col-sm-12 col-mx-auto'>
   <form class="form-horizontal" method='post'>
+  <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}" />
     <!-- NETWORK NAME -->
     <div class="form-group">
       <div class="col-5 col-sm-12 text-right">
@@ -33,7 +34,7 @@
         <label class="form-label" for="canonical_url">Canonical URL:</label>
       </div>
       <div class="col-7 col-sm-12">
-        <input class="form-input" type="text" id="canonical_url" name="canonical_url" placeholder="https://podcasts.example.com" value="{{@FULL_URL}}" required>
+        <input class="form-input" type="text" id="canonical_url" name="canonical_url" placeholder="https://podcasts.example.com" value="{{@SETTINGS.canonical_url}}" required>
       </div>
     </div>
     <!-- INTRO TEXT -->
@@ -48,10 +49,10 @@
     <!-- USERNAME -->
     <div class="form-group">
       <div class="col-5 col-sm-12 text-right">
-        <label class="form-label" for="userid">Username:</label>
+        <label class="form-label" for="username">Username:</label>
       </div>
       <div class="col-7 col-sm-12">
-        <input class="form-input" type="text" id="userid" name="userid" placeholder="admin" required>
+        <input class="form-input" type="text" id="username" name="username" placeholder="admin" required>
       </div>
     </div>
     <!-- PASSWORD -->

@@ -1,0 +1,95 @@
+<form method='post' class='form-horizontal' enctype="multipart/form-data">
+<input type="hidden" name="token" value="{{ @SESSION.csrf_token }}" />
+  <div class="columns">
+    <div class="column col-8 col-sm-12 col-mx-auto">
+      <div class="columns">
+
+        <div class="column col-12">
+          <div class="divider text-center"></div>
+        </div>
+
+        <!-- PUBLISH_TS -->
+        <div class="column col-4 col-sm-12">
+          <div class="form-group">
+            <label class='form-label' for='publish_ts'>Publish Time</label>
+            <input class='form-input' type='date' name='publish_ts' id='publish_ts' value="{{ @episode.publish_ts ?: date('Y-m-d') }}" />
+          </div>
+        </div>
+        <!-- EXPLICIT -->
+        <div class="column col-5 col-sm-12">
+          <p></p>
+          <div class="form-group">
+            <label class="form-switch">
+              <input type="checkbox" name='explicit' {{ @episode.explicit ? 'checked' : ''}} />
+              <i class="form-icon"></i> Contains Explicit Content
+            </label>
+          </div>
+        </div>
+
+        <div class="column col-12">
+          <div class="divider text-center" data-content="Episode Details"></div>
+        </div>
+        <!-- SHOW_ID -->
+        <div class="column col-8 col-sm-12">
+          <div class="form-group">
+            <label class='form-label' for='show_id'>Show</label>
+            <select class="form-select" name='show_id' id='show_id' required>
+              <option disabled selected value> -- Select Show -- </option>
+              <repeat group="{{ @shows }}" value="{{ @show }}">
+              <option value="{{ @show.show_id }}" {{ (@episode.show_id == @show.show_id) ? 'selected' : '' }}>{{ @show.title }} ({{ sprintf('S%02sE%02s', @show.current_season, @show.current_episode) }})</option>
+              </repeat>
+            </select>
+          </div>
+        </div>
+        <!-- SEASON NUMBER -->
+        <div class="column col-2 col-sm-6">
+          <div class="form-group">
+            <label class='form-label' for='season_number'>Season</label>
+            <input class='form-input' type='number' name='season_number' id='season_number' required min='1' value="{{@episode.season_number}}" />
+          </div>
+        </div>
+        <!-- EPISODE NUMBER -->
+        <div class="column col-2 col-sm-6">
+          <div class="form-group">
+            <label class='form-label' for='_number'>Episode</label>
+            <input class='form-input' type='number' name='episode_number' id='episode_number' required min='1' value="{{@episode.episode_number}}"/>
+          </div>
+        </div>
+
+        <div class="column col-12">
+          <div class="divider text-center" data-content="Episode Data"></div>
+        </div>
+        <!-- EPISODE TITLE -->
+        <div class="column col-7 col-sm-12">
+          <div class="form-group">
+            <label class='form-label' for='ep_title'>Title</label>
+            <input class='form-input' name='ep_title' id='ep_title' placeholder='Episode Title' required value="{{@episode.title}}" />
+          </div>
+        </div>
+        <!-- SUMMARY -->
+        <div class="column col-12">
+          <div class="form-group">
+            <label class="form-label" for="summary">Summary</label>
+            <textarea class="form-input" name='summary' id="summary" placeholder="Episode Summary (Up to 255 characters)" rows="2" maxlength='255' required>{{@episode.summary}}</textarea>
+          </div>
+        </div>
+        <!-- SHOW NOTES -->
+        <div class="column col-12">
+          <div class="form-group">
+            <label class="form-label" for="show_notes">Show Notes <small><em>(Basic <a href='https://www.markdownguide.org/cheat-sheet/' target='_blank'>Markdown</a> syntax supported)</em></small></label>
+            <textarea class="form-input" name='show_notes' id="show_notes" placeholder="Show Notes (up to 4000 characters)" rows="6" maxlength='4000'>{{@episode.show_notes}}</textarea>
+          </div>
+        </div>
+
+        <div class="column col-12">
+          <div class="divider text-center"></div>
+        </div>
+        <div class="column col-12 centered text-center">
+          <!-- SUBMIT BUTTON -->
+          <input type="submit" class="btn btn-primary" value="Save Changes" />
+          <input type="reset" class="btn" value="Reset" />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

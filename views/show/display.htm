@@ -1,0 +1,58 @@
+<div class='column col-12 text-center text-gray'>
+  <sup><em>Presented by {{ @show.author }}</em></sup>
+</div>
+
+<div class="column col-12">
+  <div class="divider text-center" data-content="Category: <check if="@show.category_group">{{ @show.category_group }} &raquo; </check>{{ @show.category_name }}</check>"></div>
+</div>
+
+<!-- SHOW DETAILS -->
+<div class="column col-4 col-sm-12">
+  <img class="img-responsive img-fit-cover" src="{{ @cover_art_url }}" />
+</div>
+<div class="column col-8 col-sm-12">
+  <check if="@SESSION.USER">
+  <div class='float-right'>
+      <a href="{{ 'show_edit', 'show_id='.@show.show_id | alias }}" class='tooltip' data-tooltip='Edit Show'><i class="icon icon-edit icon-2x" title="Edit"></i></a>
+  </div>
+  </check>
+  <h4>{{ @show.short_description }}</h4>
+  <p>{{ @show.full_description }}</p>
+  <div class='float-right'>
+    <a href="{{ 'show_feed', 'show_id='.@show.show_id | alias }}" class='tooltip' data-tooltip='Subscribe'><img src="assets/img/feed-icon-28x28.png" alt="RSS Feed for {{@show.title}}" /></a>
+  </div>
+  <check if="@show.explicit">
+  <p><span class="label label-warning label-rounded">Explicit</span></p>
+  </check>
+  <check if="@@show.license_description">
+    <p><sub>License: {{ @show.license_description }}</sub></p>
+  </check>
+</div>
+
+<!-- EPISODE LISTING -->
+<check if="@episodes">
+<div class="column col-12">
+  <div class="divider text-center" data-content="{{@show.episode_count}} Episodes"></div>
+</div>
+<table class="table table-hover">
+  <tbody>
+    <repeat group="{{ @episodes }}" value="{{ @item }}">
+    <tr style="vertical-align:top">
+      <td>
+        <strong><a href="{{ 'episode_by_id', 'episode_id='.@item.episode_id | alias }}">{{ @item.title }}</a></strong><br/>
+        <span class='text-gray'>{{ sprintf('S%02dE%02d', @item.season_number, @item.episode_number) }}</span>
+      </td>
+      <td style="word-wrap: break-word">{{ nl2br(@item.summary) }}</td>
+      <td>{{ date('d M Y', strtotime(@item.publish_ts)) }}</td>
+      <td nowrap>
+        <a href="{{ 'episode_download', 'episode_id='.@item.episode_id | alias }}" class='tooltip' data-tooltip='Download'><i class="icon icon-download"></i></a>
+        <check if="@SESSION.USER">
+        <a href="{{ 'episode_edit', 'episode_id='.@item.episode_id | alias }}" class='tooltip' data-tooltip='Edit'><i class="icon icon-edit"></i></a>
+        <a href="{{ 'episode_delete', 'episode_id='.@item.episode_id | alias }}" class='tooltip' data-tooltip='Delete'><i class="icon icon-delete"></i></a>
+        </check>
+      </td>
+    </tr>
+    </repeat>
+  </tbody>
+</table>
+</check>

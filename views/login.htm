@@ -1,8 +1,11 @@
-<div class='columns'>
-  <div class='column col-4 col-sm-8 col-mx-auto text-center'>
-    <form method='post' class="form">
+<!-- LOGIN VIEW -->
+<div class='column col-4 hide-sm'>
+</div>
+<div class='column col-4 col-sm-10 col-mx-auto text-center'>
+  <form method='post' class="form">
+  <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}" />
     <div class="form-group">
-      <input class="form-input input-lg" type="text" id="userid" name="userid" placeholder="Username" />
+      <input class="form-input input-lg" type="text" id="username" name="username" placeholder="Username" />
     </div>
     <div class="form-group">
       <input class="form-input input-lg" type="password" id="passwd" name="passwd" placeholder="Password" />
@@ -10,12 +13,18 @@
     <div class="form-group">
       <input class="btn btn-primary" type="submit" value="Login" />
     </div>
-    </form>
-  </div>
+  </form>
+</div>
+<div class='column col-4 hide-sm'>
+</div>
+<div class="column col-12">
+  <div class="divider text-center"></div>
 </div>
 
-<div class='columns'>
-  <div class='column col-6 col-sm-12 col-mx-auto text-center'>
-    <p><em>This is a restricted access system. You should only attempt to login if you are an authorized user.</em></p>
-  </div>
+<div class='column col-6 col-sm-12 col-mx-auto text-center'>
+  <p><em>This is a restricted access system. You should only attempt to login if you are an authorized user.</em></p>
 </div>
+<div class="column col-12">
+  <div class="divider text-center"></div>
+</div>
+<!-- END LOGIN VIEW -->

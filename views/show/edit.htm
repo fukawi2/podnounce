@@ -1,0 +1,118 @@
+<form method='post' class='form' enctype="multipart/form-data">
+<input type="hidden" name="token" value="{{ @SESSION.csrf_token }}" />
+<div class="columns">
+  <div class="column col-12">
+    <div class="divider text-center" data-content="Show Information"></div>
+  </div>
+  <!-- SHOW TITLE -->
+  <div class="column col-5 col-sm-12">
+    <div class="form-group">
+      <label class='form-label' for='show_title'>Show Title</label>
+      <input class='form-input' name='show_title' id='show_title' placeholder='Show Title (recommended 25 characters or less)' required value="{{ @show.title }}" />
+    </div>
+  </div>
+  <!-- AUTHOR -->
+  <div class="column col-4 col-sm-12">
+    <div class="form-group">
+      <label class='form-label' for='author'>Host/Presenter</label>
+      <input class='form-input' name='author' id='author' placeholder='Author Name (Person or Brand)' required value="{{ @show.author }}" />
+    </div>
+  </div>
+  <!-- CATEGORY -->
+  <div class="column col-3 col-sm-12">
+    <div class="form-group">
+      <label class='form-label' for='category_id'>Category</label>
+      <select class="form-select" name='category_id' id='category_id' required>
+        <option disabled selected value> -- Select Category -- </option>
+        <repeat group="{{ @categories }}" key="{{ @key }}" value="{{ @item }}">
+          <optgroup label="{{ @key }}">
+            <repeat group="{{ @item }}" value="{{ @item }}">
+            <option value="{{ @item.category_id }}" {{ @item.category_id==@show.category_id ? 'selected' : '' }}>{{ @item.category_name }}</option>
+            </repeat>
+          </optgroup>
+        </repeat>
+      </select>
+    </div>
+  </div>
+  <!-- COVER ART -->
+  <div class="column col-5 col-sm-12">
+    <div class="form-group">
+      <label class="form-label" for="show_image">Cover Art</label>
+      <input class="form-input" name='show_image' id="show_image" type="file" accept=".jpg,.jpeg,.png">
+      <p><small>Square images look best. JPG or PNG image. Minimum 1400&times;1400 pixels and a maximum size of 3000&times;3000</small></p>
+    </div>
+  </div>
+  <!-- LICENSE -->
+  <div class="column col-4 col-sm-12">
+    <div class="form-group">
+      <label class='form-label' for='license_id'>License <small><a href='https://help.soundcloud.com/hc/en-us/articles/115003566468-Choosing-a-license-for-your-track' target='_blank'>Help</a></small></label>
+      <select class="form-select" name='license_id' id='license_id'>
+        <option disabled selected value> -- Select License -- </option>
+        <repeat group="{{ @licenses }}" value="{{ @item }}">
+        <option value="{{ @item.license_id }}" {{ @item.license_id==@show.license_id ? 'selected' : '' }}>{{ @item.description }}</option>
+        </repeat>
+      </select>
+    </div>
+  </div>
+  <!-- CHECKBOXES -->
+  <div class="column col-3 col-sm-12">
+    <div class="column col-12">
+      <div class="divider text-center" data-content="Options"></div>
+    </div>
+    {*
+    <!-- ENABLED -->
+    <div class="form-group">
+      <label class="form-switch">
+        <input type="checkbox" name='active' {{ (@show.active or !@show) ? 'checked' : '' }}/>
+        <i class="form-icon"></i> Enabled
+      </label>
+    </div>
+    *}
+    <!-- EXPLICIT -->
+    <div class="form-group">
+      <label class="form-switch">
+        <input type="checkbox" name='explicit' {{ (@show.explicit) ? 'checked' : '' }}/>
+        <i class="form-icon"></i> Contains Explicit Content
+      </label>
+    </div>
+  </div>
+
+  <div class="column col-12 col-mx-auto">
+    <div class="divider text-center" data-content="Show Descriptions"></div>
+  </div>
+  <!-- SHORT DESCRIPTION -->
+  <div class="column col-8 col-sm-12 col-mx-auto">
+    <div class="form-group">
+      <label class='form-label' for='short_description'>Short Description / Tagline</label>
+      <input class='form-input' name='short_description' id='short_description' placeholder='Short Description (maximum 70 characters)' required value="{{ @show.short_description }}" maxlength='70' />
+    </div>
+  </div>
+  <div class="column col-4 col-sm-12 col-mx-auto">
+    <p></p>
+    <p><small>This is a basic tagline for your show. For example, "<em>The best country music</em>" or "<em>Weekly technology news review</em>"</small></p>
+  </div>
+  <!-- FULL DESCRIPTION -->
+  <div class="column col-8 col-sm-12 col-mx-auto">
+    <div class="form-group">
+      <label class="form-label" for="full_description">Full Description</label>
+      <textarea class="form-input" name='full_description' id="full_description" placeholder="Full Description" rows="3" required>{{ @show.full_description }}</textarea>
+    </div>
+  </div>
+  <div class="column col-4 col-sm-12 col-mx-auto">
+    <p></p>
+    <p><small>The full description of your show can be a long description with the complete details of your podcast.</small></p>
+  </div>
+
+  <div class="column col-12 col-mx-auto">
+    <div class="divider"></div>
+  </div>
+  <!-- ACTION BUTTONS -->
+  <div class="column col-12 text-center">
+    <check if="{{ @show }}">
+    <false><input type="submit" class="btn btn-primary" value="Create Show" /></false>
+    <true><input type="submit" class="btn btn-primary" value="Update Show" /></true>
+    </check>
+    <input type="reset" class="btn" value="Reset" />
+  </div>
+</div>
+</form>

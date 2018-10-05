@@ -1,0 +1,11 @@
+<div class='column col-8 text-center col-mx-auto'>
+  <p>Are you sure you want to delete episode "{{@episode.title}}"?
+</div>
+<div class="column col-12 text-center col-mx-auto">
+  <form method='post'>
+    <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}" />
+    <!-- SUBMIT BUTTON -->
+    <input type="submit" class="btn btn-error" value="Yes, delete it!" />
+  </form>
+</div>
+
