@@ -233,6 +233,17 @@ class Controller {
   }
 
 
+  /* Converts a raw byte figure to human readable string
+   * Source: http://jeffreysambells.com/2012/10/25/human-readable-filesize-php
+  // this is a static function so it can be called from within templates
+   */
+  public static function bytes2human($bytes, $decimals = 2) {
+    $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+    $factor = floor((strlen($bytes) - 1) / 3);
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+  }
+
+
   public function FetchCategories() {
     $f3 = Base::instance();
     $db_category = new DB\SQL\Mapper($f3->get('DB'), 'categories');

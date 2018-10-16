@@ -1,0 +1,37 @@
+<check if="@media">
+<true>
+<table class='table'>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Size</th>
+      <th>Type</th>
+      <th>Downloads</th>
+      <th>Preview</th>
+    </tr>
+  </thead>
+  <tbody>
+<repeat group="{{ @media }}" value="{{ @item }}">
+  <tr>
+    <td>{{@item.media_id}}</td>
+    <td><a href='{{ \Controller::GetMediaURLByID(@item.media_id) }}'>{{@item.fname_nice}}</a></td>
+    <td>{{ \Controller::bytes2human(@item.media_bytes) }}</td>
+    <td>{{@item.mime_type}}</td>
+    <td>{{@item.download_count}}</td>
+    <td>
+      <check if="{{@item.mime_type}} == 'image/jpeg'">
+      <figure class="avatar avatar-xl">
+        <img src="{{ \Controller::GetMediaURLByID(@item.media_id) }}">
+      </figure>
+      </check>
+    </td>
+  </tr>
+</repeat>
+  </tbody>
+</table>
+</true>
+<false>
+<h3 class='text-center'>Sorry, no media yet!</h3>
+</false>
+</check>
