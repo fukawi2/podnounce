@@ -114,19 +114,27 @@ $(document).ready(function(){
     $("#show_notes").val('');
     $("#season_number").val('');
     $("#episode_number").val('');
+
     // fetch show data via api and set to the appropriate form fields
     $.ajax({
-      url: "{{ 'api_getshows' | alias }}/"+$("#show_id").val(),
+      url: "{{ 'api_show' | alias }}?show_id="+$("#show_id").val(),
       dataType: "json",
       type: "GET",
       async: true,
       success: function (jsonData) {
-        console.log(jsonData);
-        $("#ep_title").val(jsonData.title_template);
-        $("#summary").val(jsonData.summary_template);
-        $("#show_notes").val(jsonData.notes_template);
-        $("#season_number").val(jsonData.current_season || 1);
-        $("#episode_number").val(jsonData.current_episode+1);
+        // server returned successfully.
+        var showData = jsonData[$("#show_id").val()];
+        if ( typeof(showData) != "undefined" ) {
+          // and it even returned the data we need
+          $("#ep_title").val(showData.title_template);
+          $("#summary").val(showData.summary_template);
+          $("#show_notes").val(showData.notes_template);
+          $("#season_number").val(showData.current_season || 1);
+          $("#episode_number").val(showData.current_episode+1);
+        } else {
+          // Server successfully returned, but not with the data we needed.
+          alert('No data returned from server.');
+        }
       },
       error(jqXHR, textStatus, errorThrown) {
         alert('Something wrong happened because the server said: ' + errorThrown)
