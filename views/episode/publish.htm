@@ -117,7 +117,7 @@ $(document).ready(function(){
 
     // fetch show data via api and set to the appropriate form fields
     $.ajax({
-      url: "{{ 'api_show' | alias }}?show_id="+$("#show_id").val(),
+      url: "{{ 'api_show' | alias }}?id="+$("#show_id").val(),
       dataType: "json",
       type: "GET",
       async: true,

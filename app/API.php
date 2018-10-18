@@ -19,7 +19,7 @@ Class API extends Controller {
         AND episodes.season_number = (SELECT MAX(season_number) FROM episodes WHERE episodes.show_id = shows.show_id)';
 
     // load the database record(s), with or without a filter
-    $show_id = $f3->get('GET.show_id');
+    $show_id = $f3->get('GET.id');
     if ($show_id)
       $db_show->load(array('active IS TRUE AND show_id=?', $show_id));
     else
