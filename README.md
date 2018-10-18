@@ -3,7 +3,7 @@ Open-source web-based podcast publishing tool, supporting multiple shows.
 
 ## Description
 
-Podnounce (*Podcast Announce*) is a web-based platform to publish and
+PodNounce (*Podcast Announce*) is a web-based platform to publish and
 distribute podcasts, with support for multiple shows. It was initially written
 for a local community radio station to allow for publishing of presenters'
 shows in podcast format.
@@ -11,6 +11,7 @@ shows in podcast format.
 ## Features
 
   - Simple, web-based user interface.
+    - User interface is responsive (works on desktop, tablet and mobile)
   - Multiple Shows.
   - RSS feeds:
     - Per show; and
