@@ -47,6 +47,7 @@ PodNounce runs on any basic Linux server with common infrastructure:
 * [Fat-Free Framework](https://fatfreeframework.com) - The PHP framework
 * [Spectre.css](https://picturepan2.github.io/spectre/) - CSS Boilerplate
 * [Composer](https://getcomposer.org/) - PHP Dependency Management
+* [jQuery](https://jquery.com/) - Client-side JavaScript Framework
 
 ## Contributing
 

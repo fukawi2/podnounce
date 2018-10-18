@@ -144,7 +144,10 @@ CREATE TABLE shows (
     active boolean DEFAULT true NOT NULL,
     cover_art_id integer,
     license_id text,
-    category_id integer
+    category_id integer,
+    title_template text,
+    summary_template text,
+    notes_template text
 );
 
 
