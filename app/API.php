@@ -32,8 +32,98 @@ Class API extends Controller {
       $db_show->next();
     }
 
+    $this->__RenderJSON($data);
+  }
+
+
+  function GetEpisode($f3,$params) {
+    $db_episode = new DB\SQL\Mapper($f3->get('DB'), 'episodes');
+
+    // load the database record(s), with or without a filter
+    $episode_id = $f3->get('GET.id');
+    if ($episode_id)
+      $db_episode->load(array('episode_id=?', $episode_id));
+    else
+      $db_episode->load();
+
+    // build the response to the client
+    $data = array();
+    while (!$db_episode->dry()) {
+      $data[$db_episode->episode_id] = $db_episode->cast();
+      $db_episode->next();
+    }
+
+    $this->__RenderJSON($data);
+  }
+
+
+  function GetCategory($f3,$params) {
+    $db_category = new DB\SQL\Mapper($f3->get('DB'), 'categories');
+
+    // load the database record(s), with or without a filter
+    $category_id = $f3->get('GET.id');
+    if ($category_id)
+      $db_category->load(array('category_id=?', $category_id));
+    else
+      $db_category->load();
+
+    // build the response to the client
+    $data = array();
+    while (!$db_category->dry()) {
+      $data[$db_category->category_id] = $db_category->cast();
+      $db_category->next();
+    }
+
+    $this->__RenderJSON($data);
+  }
+
+
+  function GetLicense($f3,$params) {
+    $db_license = new DB\SQL\Mapper($f3->get('DB'), 'licenses');
+
+    // load the database record(s), with or without a filter
+    $license_id = $f3->get('GET.id');
+    if ($license_id)
+      $db_license->load(array('license_id=?', $license_id));
+    else
+      $db_license->load();
+
+    // build the response to the client
+    $data = array();
+    while (!$db_license->dry()) {
+      $data[$db_license->license_id] = $db_license->cast();
+      $db_license->next();
+    }
+
+    $this->__RenderJSON($data);
+  }
+
+
+  function GetUser($f3,$params) {
+    $db_user = new DB\SQL\Mapper($f3->get('DB'), 'users');
+
+    // load the database record(s), with or without a filter
+    $user_id = $f3->get('GET.id');
+    if ($user_id)
+      $db_user->load(array('user_id=?', $user_id));
+    else
+      $db_user->load();
+
+    // build the response to the client
+    $data = array();
+    while (!$db_user->dry()) {
+      $data[$db_user->user_id] = $db_user->cast();
+      unset($data[$db_user->user_id][passwd]);
+      $db_user->next();
+    }
+
+    $this->__RenderJSON($data);
+  }
+
+
+  private function __RenderJSON($jsonData) {
     header('Content-Type: application/json');
-    echo json_encode($data, JSON_PRETTY_PRINT);
+    echo json_encode($jsonData, JSON_PRETTY_PRINT);
   }
 
 }
