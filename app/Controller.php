@@ -56,11 +56,16 @@ class Controller {
      * the client to be authenticated. This makes it easy and reliable to
      * ensure which pages are and are not protected by managing the url in our
      * routes as required.
+     * We also protect the API behind the same authentication, but in this case
+     * when a client is not authorized, we just bounce them to a 403 Forbidden
+     * instead of the login page since API users should be machines not humans.
      */
-    if (preg_match('|^/admin|', $f3->get('PATTERN'))) {
+    if (preg_match('|^/(admin)|', $f3->get('PATTERN')))
       if (!$f3->exists('SESSION.USER'))
         $f3->reroute('@login');
-    }
+    if (preg_match('|^/(api)|', $f3->get('PATTERN')))
+      if (!$f3->exists('SESSION.USER'))
+        $f3->error(403);
   }
 
   function afterRoute($f3,$params) {
