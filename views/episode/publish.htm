@@ -34,7 +34,7 @@
             <select class="form-select" name='show_id' id='show_id' required>
               <option disabled selected value> -- Select Show -- </option>
               <repeat group="{{ @shows }}" value="{{ @show }}">
-              <option value="{{ @show.show_id }}" {{ (@POST.show_id == @show.show_id) ? 'selected' : '' }}>{{ @show.title }} ({{ sprintf('S%02sE%02s', @show.current_season, @show.current_episode) }})</option>
+              <option value="{{ @show.show_id }}" {{ (@POST.show_id == @show.show_id) ? 'selected' : '' }}>{{ @show.title }}</option>
               </repeat>
             </select>
           </div>
@@ -101,3 +101,37 @@
     </div>
   </div>
 </form>
+
+<script>
+$(document).ready(function(){
+  $("#show_id").change(function(){
+    var loading = $.loading();
+    loading.ajax(true);
+
+    // clear any current values
+    $("#ep_title").val('');
+    $("#summary").val('');
+    $("#show_notes").val('');
+    $("#season_number").val('');
+    $("#episode_number").val('');
+    // fetch show data via api and set to the appropriate form fields
+    $.ajax({
+      url: "{{ 'api_getshows' | alias }}/"+$("#show_id").val(),
+      dataType: "json",
+      type: "GET",
+      async: true,
+      success: function (jsonData) {
+        console.log(jsonData);
+        $("#ep_title").val(jsonData.title_template);
+        $("#summary").val(jsonData.summary_template);
+        $("#show_notes").val(jsonData.notes_template);
+        $("#season_number").val(jsonData.current_season || 1);
+        $("#episode_number").val(jsonData.current_episode+1);
+      },
+      error(jqXHR, textStatus, errorThrown) {
+        alert('Something wrong happened because the server said: ' + errorThrown)
+      }
+    });
+  });
+});
+</script>

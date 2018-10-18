@@ -104,6 +104,44 @@
   </div>
 
   <div class="column col-12 col-mx-auto">
+    <div class="divider text-center" data-content="Template Text"></div>
+  </div>
+  <div class="column col-12">
+    <p>
+    <small>
+      Template text will be the default for new shows. Use template as a method
+      to ensute consistent information accompanies your episodes. For example,
+      you could set a title template of "<em>Interview with &lt;GUEST NAME&gt;</em>".
+      This would assist ensuring all your episode titles follow a similar
+      pattern, you just need to replace "&lt;GUEST NAME&gt;" appropriately.
+      Special characters (eg, brackets and braces) do not have any special
+      meaning; they are just a prompt for you when publishing a new episode.
+    </small>
+    </p>
+  </div>
+  <!-- EPISODE TITLE TEMPLATE -->
+  <div class="column col-12">
+    <div class="form-group">
+      <label class='form-label' for='title_template'>Title Template</label>
+      <input class='form-input' name='title_template' id='title_template' placeholder='Episode Title Template' value="{{ @show.title_template }}" />
+    </div>
+  </div>
+  <!-- EPISODE SUMMARY TEMPLATE -->
+  <div class="column col-12">
+    <div class="form-group">
+      <label class="form-label" for="summary_template">Summary Template</label>
+      <textarea class="form-input" name='summary_template' id="summary_template" placeholder="Episode Summary Template" rows="2">{{ @show.summary_template }}</textarea>
+    </div>
+  </div>
+  <!-- EPISODE SHOW NOTES TEMPLATE -->
+  <div class="column col-12">
+    <div class="form-group">
+      <label class="form-label" for="notes_template">Show Notes Template</label>
+      <textarea class="form-input" name='notes_template' id="notes_template" placeholder="Show Notes Template" rows="4">{{ @show.show_template }}</textarea>
+    </div>
+  </div>
+
+  <div class="column col-12 col-mx-auto">
     <div class="divider"></div>
   </div>
   <!-- ACTION BUTTONS -->

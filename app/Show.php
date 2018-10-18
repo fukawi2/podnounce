@@ -108,6 +108,9 @@ Class Show extends Controller {
     $db_show->author = $this->NullIfEmpty($f3->get('POST.author'));
     $db_show->license_id = $f3->get('POST.license_id');
     $db_show->explicit = $f3->get('POST.explicit');
+    $db_show->title_template = $this->NullIfEmpty($f3->get('POST.title_template'));
+    $db_show->summary_template = $this->NullIfEmpty($f3->get('POST.summary_template'));
+    $db_show->notes_template = $this->NullIfEmpty($f3->get('POST.notes_template'));
     $cover_art_id = $this->SaveUploadedFile('show_image');
     if ($cover_art_id)
       $db_show->cover_art_id = $cover_art_id;

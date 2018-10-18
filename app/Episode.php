@@ -39,16 +39,7 @@ Class Episode extends Controller {
     if ($f3->VERB == 'POST')
       $this->__PublishPOST($f3,$params);
 
-    /* create some virtual fields against the $db_show object to calculate
-     * the current/maximum season/episode for each show.
-     */
-    $db_show->current_season  = '
-      SELECT MAX(season_number) FROM episodes WHERE episodes.show_id = shows.show_id';
-    $db_show->current_episode = '
-      SELECT MAX(episode_number)
-      FROM episodes
-      WHERE episodes.show_id = shows.show_id
-        AND episodes.season_number = (SELECT MAX(season_number) FROM episodes WHERE episodes.show_id = shows.show_id)';
+    // make database query to get a list of shows
     $f3->set('shows', $db_show->find(
       array('active IS TRUE'),  // filter
       array('order'=>'title')   // sorting
