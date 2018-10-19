@@ -106,7 +106,7 @@ Class Install extends Controller {
 
     $f3->set('SESSION.TOAST.msg', 'Installation Complete!');
     $f3->set('SESSION.TOAST.class', 'success');
-    $f3->reroute('@home');
+    $f3->reroute('@settings');
   }
 
   /* Populates the database lookup tables with based on the arrays defined
