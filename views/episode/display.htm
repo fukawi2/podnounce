@@ -12,7 +12,7 @@
     <img src="{{ \Controller::GetMediaURLByID(@show.cover_art_id) }}" class="img-responsive" alt="Cover Art for {{@show.title}}" />
   </figure>
   <h4>Listen Now!</h4>
-  <audio controls="controls" src="{{ 'episode_download', 'episode_id='.@item.episode_id | alias }}">
+  <audio controls="controls" src="{{ 'episode_download', 'episode_id='.@item.episode_id | alias }}" preload="metadata">
     Your browser does not support the HTML5 Audio element.
   </audio>
 </div>
