@@ -36,12 +36,21 @@ PodNounce runs on any basic Linux server with common infrastructure:
 
  1. Download a release tarball.
  2. Extract to your document root (eg, `/var/www/html/`)
- 3. Create a database and populate with the schema:
+ 3. Create server-writable directorie. For example under apache on CentOS:
    ```
-   createdb podnounce
+   cd /var/www/html/podnounce
+   mkdir tmp uploads
+   chown apache tmp uploads
+   ```
+ 4. Create a database and populate with the schema:
+   ```
+   createuser podnounce
+   createdb -O podnounce podnounce
    psql podnounce < postgresql-schema.sql
    ```
- 4. Open your web browser and point it to your web server. The installation process should automatically start.
+ 5. Create a configuration file for your database connection:
+    `cp podnounce.conf.DIST podnounce.conf` then edit `podnounce.conf`
+ 6. Open your web browser and point it to your web server. The installation process should automatically start.
 
 ## Built With
 
