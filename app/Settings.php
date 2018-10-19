@@ -4,7 +4,6 @@ Class Settings extends Controller {
 
   function Main($f3,$params) {
     $db_setting = new DB\SQL\Mapper($f3->get('DB'), 'settings');
-    $db_category = new DB\SQL\Mapper($f3->get('DB'), 'categories');
 
     if ($f3->VERB == 'POST')
       $this->__MainPOST($f3,$params);
