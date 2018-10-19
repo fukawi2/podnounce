@@ -278,7 +278,7 @@ Class Episode extends Controller {
    */
   private function __CountDuplicateEpisodeNumbers($show_id, $s_num, $e_num, $episode_id = null) {
     $f3 = Base::instance();
-    $db_episode = new DB\SQL\Mapper($f3->get('DB'), 'episode');
+    $db_episode = new DB\SQL\Mapper($f3->get('DB'), 'episodes');
 
     if ($episode_id) {
       return $db_episode->count(array('show_id=? AND season_number=? AND episode_number=? AND episode_id != ?',
