@@ -12,7 +12,7 @@
     <img src="{{ \Controller::GetMediaURLByID(@show.cover_art_id) }}" class="img-responsive" alt="Cover Art for {{@show.title}}" />
   </figure>
   <h4>Listen Now!</h4>
-  <audio controls="controls" src="{{ 'episode_download', 'episode_id='.@item.episode_id | alias }}" preload="metadata">
+  <audio controls="controls" src="{{ 'episode_download', 'episode_id='.@episode.episode_id | alias }}" preload="metadata">
     Your browser does not support the HTML5 Audio element.
   </audio>
 </div>
@@ -23,7 +23,7 @@
   <p class='text-gray'>
     <sub>
     Presented by {{ @show.author }}<br/>
-    Published {{ date('d M Y', strtotime(@item.publish_ts)) }}
+    Published {{ date('d M Y', strtotime(@episode.publish_ts)) }}
   </sub>
   </p>
 </div>
@@ -35,7 +35,7 @@
     <sub>
       {{ sprintf('S%02dE%02d', @episode.season_number, @episode.episode_number) }}<br/>
     Presented by {{ @show.author }}<br/>
-    Published {{ date('d M Y', strtotime(@item.publish_ts)) }}
+    Published {{ date('d M Y', strtotime(@episode.publish_ts)) }}
   </sub>
   </p>
 </div>
