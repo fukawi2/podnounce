@@ -74,7 +74,7 @@ Class Feeds extends Controller {
     $f3->set('show', $metashow);
 
     // load episodes
-    if ($db_firehose_feed->count() != 0)
+    if ($db_firehose_feed->count() === 0)
       $f3->error(204, 'No episodes available.'); // HTTP 204 = "No Content"
     $f3->set('episodes', $db_firehose_feed->find(
       null, // filter
