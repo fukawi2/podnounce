@@ -58,6 +58,16 @@ Class Install extends Controller {
 
     // validate user input
     foreach ($this->setting_keys as $key => $required) {
+      /* some normally mandatory settings aren't required at install time so
+       * only check they're not null if the field is actually set on the
+       * install form. this particularly affects the 'network_category' because
+       * the database table of categories isn't populated until after install
+       * so we can't demand the user selects from a non-existent list prior to
+       * installation!
+       */
+      if (!$f3->exists('POST.'.$key))
+        continue;
+
       $value = $this->NullIfEmpty($f3->get('POST.'.$key));
       if ($required and empty($value)) {
         $f3->set('SESSION.TOAST.msg', $key.' is required');
