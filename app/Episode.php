@@ -37,7 +37,7 @@ Class Episode extends Controller {
 
     // if our request method is POST then we need to create/update a record
     if ($f3->VERB == 'POST')
-      $this->__PublishPOST($f3,$params);
+      $this->__DoPOST($f3,$params);
 
     // make database query to get a list of shows
     $f3->set('shows', $db_show->find(
@@ -59,7 +59,7 @@ Class Episode extends Controller {
 
     // if our request method is POST then we need to create/update a record
     if ($f3->VERB == 'POST')
-      $this->__PublishPOST($f3,$params);
+      $this->__DoPOST($f3,$params);
 
     // data for the page
     $db_episode->load(array('episode_id=?', $episode_id));
