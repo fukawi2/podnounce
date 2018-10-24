@@ -22,11 +22,9 @@
       <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link>
     </image>
 <check if="@show.category_group">
-<true>
     <itunes:category text="{{ @show.category_group }}">
       <itunes:category text="{{ @show.category_name }}"/>
     </itunes:category>
-</true>
 <false>
     <itunes:category text="{{@show.category_name}}"/>
 </false>
