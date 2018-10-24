@@ -13,10 +13,14 @@
       <itunes:email>{{ @SETTINGS.admin_email }}</itunes:email>
     </itunes:owner>
     <itunes:explicit>{{ @show.explicit ? 'yes' : 'no' }}</itunes:explicit>
+    <image>
 <check if="!empty(@show.image_url)">
-<true><itunes:image href="{{ @SETTINGS.canonical_url }}/{{ @show.image_url }}" /></true>
-<false><itunes:image href="{{ @SETTINGS.canonical_url }}/{{ \Controller::GetMediaURLByID(@show.cover_art_id) }}" /></false>
+<true>      <url>{{ @SETTINGS.canonical_url }}/{{ @show.image_url }}</url></true>
+<false>      <url>{{ @SETTINGS.canonical_url }}/{{ \Controller::GetMediaURLByID(@show.cover_art_id) }}</url></false>
 </check>
+      <title>{{ @show.title }}</title>
+      <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link>
+    </image>
 <check if="@show.category_group">
 <true>
     <itunes:category text="{{ @show.category_group }}">
