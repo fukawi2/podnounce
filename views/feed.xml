@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{{ @show.title }}</title>
     <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link>
@@ -27,6 +27,8 @@
     <itunes:category text="{{@show.category_name}}"/>
 </false>
 </check>
+    <atom:link href="{{@REALM}}" rel="self" type="application/rss+xml" />
+
     <!-- Total Episodes: {{ count(@episodes) }} -->
 
 <repeat group="{{ @episodes }}" value="{{ @item }}">
