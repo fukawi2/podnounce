@@ -43,8 +43,8 @@
       <!-- long descriptions of the episode - up to 4000 characters -->
       <description>{{ empty(@item.show_notes) ? trim(@item.summary) : strip_tags(Parsedown::instance()->text(trim(@item.show_notes))) }}</description>
       <itunes:summary>{{ empty(@item.show_notes) ? trim(@item.summary) : strip_tags(Parsedown::instance()->text(trim(@item.show_notes))) }}</itunes:summary>
-      <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@show_id | alias }}</link>
-      <enclosure url="{{@SETTINGS.canonical_url}}{{ 'episode_download', 'episode_id='.@item.episode_id | alias  }}" type="{{ @item.mime_type }}" length="{{ @item.media_bytes }}"></enclosure>
+      <link>{{ @SETTINGS.canonical_url }}/{{ \Controller::GetMediaURLByID(@item.media_id) }}</link>
+      <enclosure url="{{ @SETTINGS.canonical_url }}/{{ \Controller::GetMediaURLByID(@item.media_id) }}" type="{{ @item.mime_type }}" length="{{ @item.media_bytes }}" />
       <pubDate>{{ date('D, j M Y h:i:s O', strtotime(@item.publish_ts)) }}</pubDate>
       <itunes:author>{{ @show.author }}</itunes:author>
       <itunes:duration>{{ @item.duration }}</itunes:duration>
