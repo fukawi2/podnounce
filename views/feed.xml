@@ -8,6 +8,7 @@
     <itunes:author>{{ @show.author }}</itunes:author>
     <itunes:summary>{{ @show.short_description }}</itunes:summary>
     <description>{{ @show.short_description }}</description>
+    <copyright>Copyright {{ date('Y') }} {{ @show.copyright }}</copyright>
     <itunes:owner>
       <itunes:name>{{ @SETTINGS.admin_name }}</itunes:name>
       <itunes:email>{{ @SETTINGS.admin_email }}</itunes:email>

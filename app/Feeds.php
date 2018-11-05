@@ -22,6 +22,7 @@ Class Feeds extends Controller {
     if ($db_show->dry())
       $f3->error(404, 'Unable to find that show, sorry!');
     $f3->set('show', $db_show->cast());
+    $f3->set('show.copyright', $db_show->author);
 
     // load episodes from database
     $query_opts = array(
@@ -74,6 +75,7 @@ Class Feeds extends Controller {
       'image_url' => $f3->get('SETTINGS.network_logo_url'),
       'category_name' => $db_settings->category_name,
       'category_group' => $db_settings->category_group,
+      'copyright' => $f3->get('SETTINGS.network_name'),
     );
     $f3->set('show', $metashow);
 
