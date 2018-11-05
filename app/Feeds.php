@@ -24,11 +24,15 @@ Class Feeds extends Controller {
     $f3->set('show', $db_show->cast());
 
     // load episodes from database
+    $query_opts = array(
+      'order' => 'publish_ts DESC, episode_id DESC',
+      'limit' => $f3->get('SETTINGS.max_items_feed') ?: PHP_INT_MAX,
+    );
     if ($db_episode->count(array('show_id=?', $show_id)) == 0)
       $f3->error(204, 'No episodes available.'); // HTTP 204 = "No Content"
     $f3->set('episodes', $db_episode->find(
       array('show_id=?', $show_id), // filter
-      array('order'=>'publish_ts DESC, episode_id DESC') // sorting
+      $query_opts
     ));
 
     $this->__ValidateEpisodeData($f3->get('episodes'));
@@ -74,11 +78,15 @@ Class Feeds extends Controller {
     $f3->set('show', $metashow);
 
     // load episodes
+    $query_opts = array(
+      'order' => 'publish_ts DESC, episode_id DESC',
+      'limit' => $f3->get('SETTINGS.max_items_feed') ?: PHP_INT_MAX,
+    );
     if ($db_firehose_feed->count() === 0)
       $f3->error(204, 'No episodes available.'); // HTTP 204 = "No Content"
     $f3->set('episodes', $db_firehose_feed->find(
       null, // filter
-      array('order' => 'publish_ts DESC, episode_id DESC') // sorting
+      $query_opts
     ));
 
     $this->__ValidateEpisodeData($f3->get('episodes'));

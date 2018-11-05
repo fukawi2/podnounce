@@ -18,6 +18,8 @@ class Controller {
     'intro_text'      => false,
     'analytics_code'  => false,
     'ep_display_count'=> false,
+    'max_items_feed'  => false,
+    'max_items_show'  => false,
   );
 
 
@@ -301,6 +303,12 @@ class Controller {
     // analytics code (needs to be included on every page so load it here)
     $db_setting->load(array('setting=?','analytics_code'));
     $f3->set('SETTINGS.analytics_code', trim($db_setting->value));
+
+    // maximum item limits
+    $db_setting->load(array('setting=?','max_items_feed'));
+    if (ctype_digit($db_setting->value)) {
+      $f3->set('SETTINGS.max_items_feed', abs((int)$db_setting->value));
+    }
 
     // network logo id
     $db_setting->load(array('setting=?','network_logo'));
