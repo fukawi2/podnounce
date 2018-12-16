@@ -43,7 +43,7 @@
         <span class='text-gray'>{{ sprintf('S%02dE%02d', @item.season_number, @item.episode_number) }}</span>
       </td>
       <td style="word-wrap: break-word">{{ nl2br(@item.summary) }}</td>
-      <td>{{ date('d M Y', strtotime(@item.publish_ts)) }}</td>
+      <td nowrap>{{ date('d M Y', strtotime(@item.publish_ts)) }}</td>
       <td nowrap>
         <a href="{{ 'episode_download', 'episode_id='.@item.episode_id | alias }}" class='tooltip' data-tooltip='Download'><i class="icon icon-download"></i></a>
         <check if="@SESSION.USER">
