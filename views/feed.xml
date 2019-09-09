@@ -2,7 +2,10 @@
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{{ @show.title }}</title>
-    <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link>
+    <check if="!empty(@show.show_id)">
+<true><link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link></true>
+<false><link>{{@SETTINGS.canonical_url}}</link></false>
+</check>
     <language>en-us</language>
     <itunes:subtitle>Subtitle of podcast</itunes:subtitle>
     <itunes:author>{{ @show.author }}</itunes:author>
@@ -22,6 +25,10 @@
 </check>
       <title>{{ @show.title }}</title>
       <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link>
+      <check if="!empty(@show.show_id)">
+<true><link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link></true>
+<false><link>{{@SETTINGS.canonical_url}}</link></false>
+</check>
     </image>
 <check if="@show.category_group">
     <itunes:category text="{{ @show.category_group }}">
