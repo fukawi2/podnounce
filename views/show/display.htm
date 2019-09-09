@@ -17,7 +17,7 @@
   </div>
   </check>
   <h4>{{ @show.short_description }}</h4>
-  <p>{{ @show.full_description }}</p>
+  <p>{{ nl2br(@show.full_description) }}</p>
   <div class='float-right'>
     <a href="{{ 'show_feed', 'show_id='.@show.show_id | alias }}" class='tooltip' data-tooltip='Subscribe'><img src="assets/img/feed-icon-28x28.png" alt="RSS Feed for {{@show.title}}" /></a>
   </div>
