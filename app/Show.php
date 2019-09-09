@@ -35,6 +35,7 @@ Class Show extends Controller {
     $db_show->category_name = 'SELECT category_name FROM categories WHERE categories.category_id = shows.category_id';
     $db_show->category_group = 'SELECT category_group FROM categories WHERE categories.category_id = shows.category_id';
     $db_show->episode_count = 'SELECT count(*) FROM episodes WHERE episodes.show_id = shows.show_id';
+    $db_episode->download_count = 'SELECT download_count FROM media WHERE media.media_id = episodes.media_id';
 
     // query the database and validate the result
     $db_show->load(array('show_id=?', $show_id));

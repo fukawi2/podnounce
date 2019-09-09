@@ -40,7 +40,10 @@
     <tr style="vertical-align:top">
       <td>
         <strong><a href="{{ 'episode_by_id', 'episode_id='.@item.episode_id | alias }}">{{ @item.title }}</a></strong><br/>
-        <span class='text-gray'>{{ sprintf('S%02dE%02d', @item.season_number, @item.episode_number) }}</span>
+        <span class='text-gray'>
+          {{ sprintf('S%02dE%02d', @item.season_number, @item.episode_number) }}
+          <check if="{{@item.download_count > 0}}">({{ @item.download_count }} downloads)</check>
+        </span>
       </td>
       <td style="word-wrap: break-word">{{ nl2br(@item.summary) }}</td>
       <td nowrap>{{ date('d M Y', strtotime(@item.publish_ts)) }}</td>
