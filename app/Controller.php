@@ -2,7 +2,7 @@
 
 class Controller {
 
-  const VERSION = '1.3';
+  const VERSION = '1.5';
 
   /* general settings that are stored in the database are defined here for
    * batch processing in loops etc. the array key is the name of the setting
