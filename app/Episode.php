@@ -104,7 +104,14 @@ Class Episode extends Controller {
       $this->RenderPage('episode/delete.htm', 'Delete', 'Delete "'.$db_episode->title.'"');
       break;
     case 'POST':
-      $db_media->load(array('media_id=?', $db_episode->media_id));
+      // Save a couple of pieces of data before erasing so we can use them for the user feedback and rerouting steps.
+      $ep_title = $db_episode->title;
+      $show_id = $db_episode->show_id;
+      $media_id = $db_episode->media_id;
+      $db_episode->erase();
+
+      // Delete the media record once the episode is deleted, otherwise we get a fkey constraint error
+      $db_media->load(array('media_id=?', $media_id));
       if (!$db_media->dry()) {
         /* check if this is the only record in the media table that points to
          * this file on disk. if so, it is safe to remove it from disk.
@@ -118,12 +125,6 @@ Class Episode extends Controller {
         $db_media->erase();
       }
 
-      /* save a couple of pieces of data before erasing the record so we can
-       * use them for the user feedback and rerouting steps.
-       */
-      $ep_title = $db_episode->title;
-      $show_id = $db_episode->show_id;
-      $db_episode->erase();
       $f3->set('SESSION.TOAST.msg', sprintf('Deleted episode "%s"', $ep_title));
       $f3->set('SESSION.TOAST.class', 'success');
       $f3->reroute("@show_by_id(@show_id=$show_id)");
