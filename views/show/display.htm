@@ -11,7 +11,7 @@
   <img class="img-responsive img-fit-cover" src="{{ @cover_art_url }}" />
 </div>
 <div class="column col-8 col-sm-12">
-  <check if="@SESSION.USER">
+  <check if="isset(@SESSION.USER)">
   <div class='float-right'>
       <a href="{{ 'show_edit', 'show_id='.@show.show_id | alias }}" class='tooltip' data-tooltip='Edit Show'><i class="icon icon-edit icon-2x" title="Edit"></i></a>
   </div>
@@ -49,7 +49,7 @@
       <td nowrap>{{ date('d M Y', strtotime(@item.publish_ts)) }}</td>
       <td nowrap>
         <a href="{{ 'episode_download', 'episode_id='.@item.episode_id | alias }}" class='tooltip' data-tooltip='Download'><i class="icon icon-download"></i></a>
-        <check if="@SESSION.USER">
+        <check if="isset(@SESSION.USER)">
         <a href="{{ 'episode_edit', 'episode_id='.@item.episode_id | alias }}" class='tooltip' data-tooltip='Edit'><i class="icon icon-edit"></i></a>
         <a href="{{ 'episode_delete', 'episode_id='.@item.episode_id | alias }}" class='tooltip' data-tooltip='Delete'><i class="icon icon-delete"></i></a>
         </check>

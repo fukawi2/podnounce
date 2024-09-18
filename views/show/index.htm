@@ -1,4 +1,4 @@
-<check if="@SESSION.USER">
+<check if="isset(@SESSION.USER)">
 <div class='column col-12'>
   <p class='text-right'>
     <a href="{{ 'show_new' | alias }}"><span class="label label-secondary label-rounded">Create New Show</span></a>
@@ -34,7 +34,7 @@
         <check if="@item.explicit"><span class="label label-warning label-rounded">EXPLICIT</span></check>
         <br/>{{@item.episode_count}} episodes.
       </sup>
-      <check if="@SESSION.USER">
+      <check if="isset(@SESSION.USER)">
       <div class="float-right" id='admin_action'>
         <a href="{{ 'show_edit', 'show_id='.@item.show_id | alias }}"><i class="icon icon-edit icon-2x" title="Edit"></i></a>
       </div>

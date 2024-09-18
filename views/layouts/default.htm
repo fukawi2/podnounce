@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <base href="{{@SCHEME}}://{{@HOST}}:{{@PORT}}{{@BASE}}/" />
-  <title>{{ @PAGE.TITLE }} | {{ (@show.title and @show.title != @PAGE.TITLE) ? @show.title : @SETTINGS.network_name }}</title>
+  <title>{{ @PAGE.TITLE }} | {{ (isset(@show.title) and @show.title != @PAGE.TITLE) ? @show.title : @SETTINGS.network_name }}</title>
   <!-- This site is responsive. Use full screen width. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Ensure use of most common Unicode characters -->
@@ -24,14 +24,14 @@
       <a href="{{ 'home' | alias }}" class="navbar-brand"><span class="text-large">{{ @SETTINGS.network_name }}</span></a>
     </section>
     <section class="navbar-section">
-      <check if="@SESSION.USER">
+      <check if="isset(@SESSION.USER)">
       <a href="{{ 'episode_new' | alias }}" class="btn btn-link">Publish</a>
       <a href="{{ 'media_index' | alias }}" class="btn btn-link">Media</a>
       <a href="{{ 'settings' | alias }}" class="btn btn-link">Settings</a>
       </check>
       <a href="{{ 'show_index' | alias }}" class="btn btn-link">Shows</a>
       <a href="{{ 'home' | alias }}" class="btn btn-success">Home</a>
-      <check if="@SESSION.USER">
+      <check if="isset(@SESSION.USER)">
       <a href="{{ 'logout' | alias }}" class="btn btn-link">Logout</a>
       </check>
     </section>
@@ -41,7 +41,7 @@
   <div class="container centered grid-lg">
     <div class="columns">
       <!-- NETWORK LOGO -->
-      <check if="@show_network_logo and @SETTINGS.network_logo_url">
+      <check if="isset(@show_network_logo) && @show_network_logo && @SETTINGS.network_logo_url">
       <div class='column col-4 col-md-8 col-sm-12 col-mx-auto my-1'>
         <img src='{{@SETTINGS.network_logo_url}}' class='img-responsive'>
       </div>
@@ -49,11 +49,11 @@
 
       <!-- PAGE HEADER -->
       <div class="column col-12 text-center text-primary">
-        <check if="{{ @PAGE.HEADER }}"><h1 style="margin-top: 5%;">{{ @PAGE.HEADER | raw }}</h1></check>
+        <check if="{{ isset(@PAGE.HEADER) }}"><h1 style="margin-top: 5%;">{{ @PAGE.HEADER | raw }}</h1></check>
       </div>
     </div>
     <div class="columns">
-      <include href="toast.htm" if="{{@SESSION.TOAST.msg}}">
+      <include href="toast.htm" if="{{ isset(@SESSION.TOAST) && @SESSION.TOAST.msg }}">
       <include href="{{ @PAGE.CONTENT }}" />
     </div>
   </div>

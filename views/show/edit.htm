@@ -137,7 +137,7 @@
   <div class="column col-12">
     <div class="form-group">
       <label class="form-label" for="notes_template">Show Notes Template</label>
-      <textarea class="form-input" name='notes_template' id="notes_template" placeholder="Show Notes Template" rows="4">{{ @show.show_template }}</textarea>
+      <textarea class="form-input" name='notes_template' id="notes_template" placeholder="Show Notes Template" rows="4">{{ @show.show_template ?? '' }}</textarea>
     </div>
   </div>
 
