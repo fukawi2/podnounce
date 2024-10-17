@@ -20,7 +20,7 @@
         <div class="column col-4 col-sm-12">
           <div class="form-group">
             <label class='form-label' for='publish_ts'>Publish Time</label>
-            <input class='form-input' type='date' name='publish_ts' id='publish_ts' value="{{ @POST.publish_ts ?: date('Y-m-d') }}" />
+            <input class='form-input' type='date' name='publish_ts' id='publish_ts' value="{{ @POST.publish_ts ?? date('Y-m-d') }}" />
           </div>
         </div>
 
@@ -34,7 +34,7 @@
             <select class="form-select" name='show_id' id='show_id' required>
               <option disabled selected value> -- Select Show -- </option>
               <repeat group="{{ @shows }}" value="{{ @show }}">
-              <option value="{{ @show.show_id }}" {{ (@POST.show_id == @show.show_id) ? 'selected' : '' }}>{{ @show.title }}</option>
+              <option value="{{ @show.show_id }}" {{ (@POST.show_id ?? '' == @show.show_id) ? 'selected' : '' }}>{{ @show.title }}</option>
               </repeat>
             </select>
           </div>
@@ -43,14 +43,14 @@
         <div class="column col-2 col-sm-6">
           <div class="form-group">
             <label class='form-label' for='season_number'>Season</label>
-            <input class='form-input' type='number' name='season_number' id='season_number' required min='1' value="{{@POST.season_number}}" />
+            <input class='form-input' type='number' name='season_number' id='season_number' required min='1' value="{{ @POST.season_number ?? '' }}" />
           </div>
         </div>
         <!-- EPISODE NUMBER -->
         <div class="column col-2 col-sm-6">
           <div class="form-group">
             <label class='form-label' for='episode_number'>Episode</label>
-            <input class='form-input' type='number' name='episode_number' id='episode_number' required min='1' value="{{@POST.episode_number}}"/>
+            <input class='form-input' type='number' name='episode_number' id='episode_number' required min='1' value="{{ @POST.episode_number ?? '' }}"/>
           </div>
         </div>
 
@@ -61,7 +61,7 @@
         <div class="column col-7 col-sm-12">
           <div class="form-group">
             <label class='form-label' for='ep_title'>Title</label>
-            <input class='form-input' name='ep_title' id='ep_title' placeholder='Episode Title' required value="{{@POST.ep_title}}" />
+            <input class='form-input' name='ep_title' id='ep_title' placeholder='Episode Title' required value="{{ @POST.ep_title ?? '' }}" />
           </div>
         </div>
         <!-- EXPLICIT -->
@@ -69,7 +69,7 @@
           <p></p>
           <div class="form-group">
             <label class="form-switch">
-              <input type="checkbox" name='explicit' {{ @POST.explicit ? 'checked' : ''}} />
+              <input type="checkbox" name='explicit' {{ @POST.explicit ?? '' ? 'checked' : ''}} />
               <i class="form-icon"></i> Contains Explicit Content
             </label>
           </div>
@@ -78,14 +78,14 @@
         <div class="column col-12">
           <div class="form-group">
             <label class="form-label" for="summary">Summary</label>
-            <textarea class="form-input" name='summary' id="summary" placeholder="Episode Summary (Up to 255 characters)" rows="2" maxlength='255' required>{{@POST.summary}}</textarea>
+            <textarea class="form-input" name='summary' id="summary" placeholder="Episode Summary (Up to 255 characters)" rows="2" maxlength='255' required>{{ @POST.summary ?? '' }}</textarea>
           </div>
         </div>
         <!-- SHOW NOTES -->
         <div class="column col-12">
           <div class="form-group">
             <label class="form-label" for="show_notes">Show Notes <small><em>(Basic <a href='https://www.markdownguide.org/cheat-sheet/' target='_blank'>Markdown</a> syntax supported)</em></small></label>
-            <textarea class="form-input" name='show_notes' id="show_notes" placeholder="Show Notes (up to 4000 characters)" rows="6" maxlength='4000'>{{@POST.show_notes}}</textarea>
+            <textarea class="form-input" name='show_notes' id="show_notes" placeholder="Show Notes (up to 4000 characters)" rows="6" maxlength='4000'>{{ @POST.show_notes ?? '' }}</textarea>
           </div>
         </div>
 
