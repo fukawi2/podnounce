@@ -17,7 +17,7 @@
       <itunes:email>{{ @SETTINGS.admin_email }}</itunes:email>
     </itunes:owner>
     <lastBuildDate>{{ date('D, j M Y h:i:s O') }}</lastBuildDate>
-    <itunes:explicit>{{ @show.explicit ? 'yes' : 'no' }}</itunes:explicit>
+    <itunes:explicit>{{ @show.explicit ? 'true' : 'false' }}</itunes:explicit>
     <image>
 <check if="!empty(@show.image_url)">
 <true>      <url>{{ @SETTINGS.canonical_url }}/{{ @show.image_url }}</url></true>
@@ -55,7 +55,7 @@
       <pubDate>{{ date('D, j M Y h:i:s O', strtotime(@item.publish_ts)) }}</pubDate>
       <itunes:author>{{ @show.author }}</itunes:author>
       <itunes:duration>{{ @item.duration }}</itunes:duration>
-      <itunes:explicit>{{ @item.episode_explicit ? 'yes' : 'no' }}</itunes:explicit>
+      <itunes:explicit>{{ @item.episode_explicit ? 'true' : 'false' }}</itunes:explicit>
       <guid isPermaLink="false">{{ @item.guid }}</guid>
     </item>
 </repeat>
