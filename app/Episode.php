@@ -8,7 +8,7 @@ Class Episode extends Controller {
   function Display($f3,$params) {
     $db_episode = new DB\SQL\Mapper($f3->get('DB'), 'episodes');
     $db_show = new DB\SQL\Mapper($f3->get('DB'), 'shows');
-    $episode_id = $params['episode_id'];
+    $episode_id = $params['episode_id'] ?? null;
 
     // load database record for the episode
     $db_episode->load(array('episode_id=?',$episode_id));
@@ -184,7 +184,7 @@ Class Episode extends Controller {
   private function __DoPOST($f3,$params) {
     $db_episode = new DB\SQL\Mapper($f3->get('DB'), 'episodes');
     $web = \Web::instance();
-    $episode_id = $params['episode_id'];
+    $episode_id = $params['episode_id'] ?? '';
 
     /* validate the supplied data. note that empty() can only test variables
      * prior to php 5.5, which means for compatibility with php 5.4 we have to
@@ -194,11 +194,12 @@ Class Episode extends Controller {
      * the user via a toast box.
      */
     $emsg = false;
-    $show_id= $f3->get('POST.show_id');
-    $title  = $f3->get('POST.ep_title');
-    $summary= $f3->get('POST.summary');
-    $s_num  = $f3->get('POST.season_number');
-    $e_num  = $f3->get('POST.episode_number');
+    $show_id    = $f3->get('POST.show_id');
+    $title      = $f3->get('POST.ep_title');
+    $summary    = $f3->get('POST.summary');
+    $s_num      = $f3->get('POST.season_number');
+    $e_num      = $f3->get('POST.episode_number');
+    $show_notes = $f3->get('POST.show_notes');
     if (empty($show_id))  { $emsg = 'You must select a show to publish this episode to.'; }
     if (empty($title))    { $emsg = 'Show title is required.'; }
     if (empty($s_num))    { $emsg = 'Please select a season number.'; }
