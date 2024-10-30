@@ -3,7 +3,7 @@
   <channel>
     <title>{{ @show.title }}</title>
 <check if="!empty(@show.show_id)">
-<true>    <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link></true>
+<true>    <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@show.show_id | alias }}</link></true>
 <false>    <link>{{@SETTINGS.canonical_url}}</link></false>
 </check>
     <language>en-us</language>
@@ -25,8 +25,8 @@
 </check>
       <title>{{ @show.title }}</title>
 <check if="!empty(@show.show_id)">
-<true>    <link>{{ @SETTINGS.canonical_url }}{{ 'show_by_id', 'show_id='.@item.show_id | alias }}</link></true>
-<false>    <link>{{ @SETTINGS.canonical_url }}</link></false>
+<true>    <link>{{@SETTINGS.canonical_url}}{{ 'show_by_id', 'show_id='.@show.show_id | alias }}</link></true>
+<false>    <link>{{@SETTINGS.canonical_url}}</link></false>
 </check>
     </image>
 <check if="@show.category_group">
