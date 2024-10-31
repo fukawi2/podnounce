@@ -1,7 +1,7 @@
 {
   "require": {
     "bcosca/fatfree": "^3.8",
-    "erusev/parsedown": "1.*.*",
+    "erusev/parsedown": "^1.7",
     "ircmaxell/password-compat": "*"
   },
   "config": {
