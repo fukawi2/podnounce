@@ -60,7 +60,7 @@ Class Show extends Controller {
     $db_show = new DB\SQL\Mapper($f3->get('DB'), 'shows');
     $db_category = new DB\SQL\Mapper($f3->get('DB'), 'categories');
     $db_license = new DB\SQL\Mapper($f3->get('DB'), 'licenses');
-    $show_id = $params['show_id'];
+    $show_id = $params['show_id'] ?? null;
 
     // if our request method is POST then we need to create/update a record
     if ($f3->VERB == 'POST')
@@ -93,7 +93,7 @@ Class Show extends Controller {
 
   private function __EditPOST($f3,$params) {
     $db_show = new DB\SQL\Mapper($f3->get('DB'), 'shows');
-    $show_id = $params['show_id'];
+    $show_id = $params['show_id'] ?? null;
 
     if ( $show_id ) {
       // try and load the requested record for update
