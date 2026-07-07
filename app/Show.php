@@ -69,6 +69,9 @@ Class Show extends Controller {
     if ( empty($show_id) ) {
       // create new record
       $db_show->reset();
+      // populate 'show' with all columns (null-valued) so the shared edit
+      // template can reference @show.* fields without tripping PHP 8 warnings
+      $f3->set('show', $db_show->cast());
       $page_title = 'New Show';
       $page_header = 'Create New Show';
     } else {
