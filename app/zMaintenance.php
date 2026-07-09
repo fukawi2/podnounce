@@ -2,15 +2,23 @@
 
 Class zMaintenance extends Controller {
 
+  /* Line separator for progress output: a newline when run from the CLI, an
+   * HTML break for the browser-based admin pages that call these same methods.
+   */
+  private function _eol() {
+    return (PHP_SAPI === 'cli') ? "\n" : "<br/>";
+  }
+
   /* calculates the duration of audio files in the `media` table for any
    * rows that are missing a duration for whatever reason
    */
   public function FixDurations() {
     $f3 = Base::instance();
+    $nl = $this->_eol();
     $db_episode = new DB\SQL\Mapper($f3->get('DB'), 'show_feed');
     $db_media = new DB\SQL\Mapper($f3->get('DB'), 'media');
 
-    echo "=== CHECKING FOR MISSING DURATIONS ===<br/>";
+    echo "=== CHECKING FOR MISSING DURATIONS ==={$nl}";
     $chkcnt = 0;
     $badcnt = 0;
     $fixcnt = 0;
@@ -18,14 +26,14 @@ Class zMaintenance extends Controller {
     // make sure everything has a duration
     $db_episode->load();
     while (!$db_episode->dry()) {
-      echo "Episode $db_episode->episode_id has duration '$db_episode->duration'<br/>";
+      echo "Episode $db_episode->episode_id has duration '$db_episode->duration'{$nl}";
       if (!$db_episode->duration) {
         // no duration previously calculated
-        echo "  Duration missing!<br/>";
+        echo "  Duration missing!{$nl}";
         $badcnt++;
         $db_media->load(array('media_id=?', $db_episode->media_id));
         if (!$db_media->dry()) {
-          echo "  Found media_id $db_media->media_id<br/>";
+          echo "  Found media_id $db_media->media_id{$nl}";
           /* fetch the media to a local file (a no-op for local storage,
            * a download for remote backends) so we can inspect the audio
            */
@@ -45,13 +53,13 @@ Class zMaintenance extends Controller {
       $chkcnt++;
       $db_episode->next();
     }
-    echo "<br/>";
+    echo $nl;
 
     // user feedback
     if ($badcnt == 0)
       printf('Checked %s episodes; no errors found!', $chkcnt);
     else
-      printf('Checked %s episodes; found %s missing duration and fixed %s of them<br/>',
+      printf("Checked %s episodes; found %s missing duration and fixed %s of them{$nl}",
         $chkcnt, $badcnt, $fixcnt);
   }
 
@@ -62,11 +70,12 @@ Class zMaintenance extends Controller {
    */
   public function ValidateMediaStorage() {
     $f3 = Base::instance();
+    $nl = $this->_eol();
     $db_media = new DB\SQL\Mapper($f3->get('DB'), 'media');
     $db_shows = new DB\SQL\Mapper($f3->get('DB'), 'shows');
     $db_episodes = new DB\SQL\Mapper($f3->get('DB'), 'episodes');
 
-    echo "=== CHECKING FOR ORPHANED MEDIA RECORDS ===<br/>";
+    echo "=== CHECKING FOR ORPHANED MEDIA RECORDS ==={$nl}";
     $chkcnt = 0;
     $badcnt = 0;
     $db_media->reset();
@@ -75,19 +84,19 @@ Class zMaintenance extends Controller {
       $show_cnt     = $db_shows->count(array('cover_art_id=?', $db_media->media_id));
       $episode_cnt  = $db_episodes->count(array('media_id=?', $db_media->media_id));
       if ($show_cnt + $episode_cnt > 0) {
-        echo "OK: Database record $db_media->media_id used by at least one show/episode<br/>";
+        echo "OK: Database record $db_media->media_id used by at least one show/episode{$nl}";
       } else {
-        echo "NG: Unused record $db_media->media_id; REMOVING<br/>";
+        echo "NG: Unused record $db_media->media_id; REMOVING{$nl}";
         $db_media->erase();
         $badcnt++;
       }
       $chkcnt++;
       $db_media->next();
     }
-    printf('Checked %s media records; Removed %s<br/>', $chkcnt, $badcnt);
-    echo "<br/>";
+    printf("Checked %s media records; Removed %s{$nl}", $chkcnt, $badcnt);
+    echo $nl;
 
-    echo "=== CHECKING FOR ORPHANED LOCAL FILES ===<br/>";
+    echo "=== CHECKING FOR ORPHANED LOCAL FILES ==={$nl}";
     $chkcnt = 0;
     $badcnt = 0;
     $uploads = $f3->get('UPLOADS');
@@ -96,18 +105,18 @@ Class zMaintenance extends Controller {
       $db_media->load(array('fname_on_disk=?', $fname));
       if ($db_media->dry()) {
         // no record in the database for this file
-        echo "NG: No database record for $fname; DELETING<br/>";
+        echo "NG: No database record for $fname; DELETING{$nl}";
         unlink($uploads.$fname);
         $badcnt++;
       } else {
-        echo "OK: $fname belongs to database record $db_media->media_id<br/>";
+        echo "OK: $fname belongs to database record $db_media->media_id{$nl}";
       }
       $chkcnt++;
     }
-    printf('Checked %s local files; Deleted %s<br/>', $chkcnt, $badcnt);
-    echo "<br/>";
+    printf("Checked %s local files; Deleted %s{$nl}", $chkcnt, $badcnt);
+    echo $nl;
 
-    echo "=== CHECKING FOR MISSING OBJECTS ===<br/>";
+    echo "=== CHECKING FOR MISSING OBJECTS ==={$nl}";
     $chkcnt = 0;
     $badcnt = 0;
     $db_media->reset();
@@ -115,15 +124,15 @@ Class zMaintenance extends Controller {
     while (!$db_media->dry()) {
       $storage = Storage::forLocation($db_media->storage_location);
       if ($storage->exists($db_media->fname_on_disk)) {
-        echo "OK: Database record $db_media->media_id object $db_media->fname_on_disk exists ($db_media->storage_location)<br/>";
+        echo "OK: Database record $db_media->media_id object $db_media->fname_on_disk exists ($db_media->storage_location){$nl}";
       } else {
-        echo "NG: Missing object: $db_media->fname_on_disk ($db_media->fname_nice) [$db_media->storage_location]<br/>";
+        echo "NG: Missing object: $db_media->fname_on_disk ($db_media->fname_nice) [$db_media->storage_location]{$nl}";
         $badcnt++;
       }
       $chkcnt++;
       $db_media->next();
     }
-    printf('Checked %s records; Found %s missing objects.<br/>', $chkcnt, $badcnt);
+    printf("Checked %s records; Found %s missing objects.{$nl}", $chkcnt, $badcnt);
   }
 
   /* Migrates all locally-stored media to the S3 backend, then reclaims disk by
@@ -134,11 +143,12 @@ Class zMaintenance extends Controller {
    */
   public function MigrateToS3() {
     $f3 = Base::instance();
+    $nl = $this->_eol();
     $db_media = new DB\SQL\Mapper($f3->get('DB'), 'media');
     $s3 = Storage::forLocation('s3');
     $local = Storage::forLocation('local');
 
-    echo "=== MIGRATING LOCAL MEDIA TO S3 ===<br/>";
+    echo "=== MIGRATING LOCAL MEDIA TO S3 ==={$nl}";
     $migrated = 0;
     $skipped = 0;
     $failed = 0;
@@ -150,7 +160,7 @@ Class zMaintenance extends Controller {
       $key = $row->fname_on_disk;
       $src = $f3->get('UPLOADS').$key;
       if (!is_file($src)) {
-        echo "SKIP: media $row->media_id local file missing: $key<br/>";
+        echo "SKIP: media $row->media_id local file missing: $key{$nl}";
         $skipped++;
         continue;
       }
@@ -160,9 +170,9 @@ Class zMaintenance extends Controller {
         $row->save();
         $migrated_keys[$key] = true;
         $migrated++;
-        echo "OK: media $row->media_id uploaded and flipped to s3: $key<br/>";
+        echo "OK: media $row->media_id uploaded and flipped to s3: $key{$nl}";
       } else {
-        echo "FAIL: media $row->media_id upload/verify failed; left on local: $key<br/>";
+        echo "FAIL: media $row->media_id upload/verify failed; left on local: $key{$nl}";
         $failed++;
       }
     }
@@ -173,15 +183,15 @@ Class zMaintenance extends Controller {
       if ($db_media->count(array('fname_on_disk=? AND storage_location=?', $key, 'local')) == 0) {
         if ($local->delete($key)) {
           $deleted++;
-          echo "RECLAIMED: deleted local copy of $key<br/>";
+          echo "RECLAIMED: deleted local copy of $key{$nl}";
         }
       } else {
-        echo "KEEP: local copy of $key still referenced by a local record<br/>";
+        echo "KEEP: local copy of $key still referenced by a local record{$nl}";
       }
     }
 
-    echo "<br/>";
-    printf('Migrated %s; Skipped %s; Failed %s; Local copies deleted %s<br/>',
+    echo $nl;
+    printf("Migrated %s; Skipped %s; Failed %s; Local copies deleted %s{$nl}",
       $migrated, $skipped, $failed, $deleted);
   }
 
