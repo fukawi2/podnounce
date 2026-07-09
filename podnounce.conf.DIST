@@ -27,6 +27,14 @@ driver=local
 ; storage.driver=s3 (or when migrating existing media to s3). Works with any
 ; provider that speaks the S3 API.
 ;
+; The bucket must grant public read via a BUCKET POLICY (media is served
+; directly to podcast clients). PodNounce does not set per-object ACLs, as some
+; providers reject them. Apply a policy allowing s3:GetObject on <bucket>/* to
+; principal "*" once, out of band, eg:
+;   {"Version":"2012-10-17","Statement":[{"Sid":"PublicRead","Effect":"Allow",
+;    "Principal":{"AWS":["*"]},"Action":["s3:GetObject"],
+;    "Resource":["arn:aws:s3:::<bucket>/*"]}]}
+;
 [s3]
 ; Base endpoint URL of the service, eg https://<region>.example-objects.com
 endpoint=REPLACE_ME

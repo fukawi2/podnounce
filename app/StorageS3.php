@@ -3,9 +3,14 @@
 use AsyncAws\S3\S3Client;
 
 /* S3-compatible object storage backend. Works with any provider that speaks
- * the S3 API. Objects are stored public-read so they can be served directly to
- * podcast clients (and referenced as stable enclosure URLs in the RSS feeds)
- * without the application proxying the bytes.
+ * the S3 API. Objects are served directly to podcast clients (and referenced
+ * as stable enclosure URLs in the RSS feeds) without the application proxying
+ * the bytes, so the bucket must be configured for public read.
+ *
+ * Public read is expected to be granted by a bucket policy rather than a
+ * per-object ACL: some providers (eg Linode Object Storage) reject the
+ * x-amz-acl header outright, so we deliberately do not send one. See the
+ * README/config notes for the one-time public-read bucket policy to apply.
  *
  * Connection details come from the [s3] section of podnounce.conf.
  */
@@ -50,7 +55,7 @@ class StorageS3 extends Storage {
         'Body'               => $body,
         'ContentType'        => $mime_type ?: 'application/octet-stream',
         'ContentDisposition' => sprintf('attachment; filename="%s"', addslashes($download_name)),
-        'ACL'                => 'public-read',
+        // note: public read is granted by bucket policy, not a per-object ACL
       ));
       $result->resolve(); // force the request and surface any error
       return true;
