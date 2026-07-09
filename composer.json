@@ -2,7 +2,8 @@
   "require": {
     "bcosca/fatfree": "^3.8",
     "erusev/parsedown": "^1.7",
-    "ircmaxell/password-compat": "*"
+    "ircmaxell/password-compat": "*",
+    "async-aws/s3": "^3.4"
   },
   "config": {
     "optimize-autoloader": true
