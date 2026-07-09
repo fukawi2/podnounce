@@ -20,8 +20,8 @@
     <itunes:explicit>{{ @show.explicit ? 'true' : 'false' }}</itunes:explicit>
     <image>
 <check if="!empty(@show.image_url)">
-<true>      <url>{{ @SETTINGS.canonical_url }}/{{ @show.image_url }}</url></true>
-<false>      <url>{{ @SETTINGS.canonical_url }}/{{ \Controller::GetMediaURLByID(@show.cover_art_id ?? null) }}</url></false>
+<true>      <url>{{ @show.image_url }}</url></true>
+<false>      <url>{{ \Controller::GetMediaURLByID(@show.cover_art_id ?? null) }}</url></false>
 </check>
       <title>{{ @show.title }}</title>
 <check if="!empty(@show.show_id)">
@@ -50,8 +50,8 @@
       <!-- long descriptions of the episode - up to 4000 characters -->
       <description>{{ empty(@item.show_notes) ? trim(@item.summary) : strip_tags(Parsedown::instance()->text(trim(@item.show_notes))) }}</description>
       <itunes:summary>{{ empty(@item.show_notes) ? trim(@item.summary) : strip_tags(Parsedown::instance()->text(trim(@item.show_notes))) }}</itunes:summary>
-      <link>{{ @SETTINGS.canonical_url }}/{{ \Controller::GetMediaURLByID(@item.media_id) }}</link>
-      <enclosure url="{{ @SETTINGS.canonical_url }}/{{ \Controller::GetMediaURLByID(@item.media_id) }}" type="{{ @item.mime_type }}" length="{{ @item.media_bytes }}" />
+      <link>{{ \Controller::GetMediaURLByID(@item.media_id) }}</link>
+      <enclosure url="{{ \Controller::GetMediaURLByID(@item.media_id) }}" type="{{ @item.mime_type }}" length="{{ @item.media_bytes }}" />
       <pubDate>{{ date('D, j M Y h:i:s O', strtotime(@item.publish_ts)) }}</pubDate>
       <itunes:author>{{ @show.author }}</itunes:author>
       <itunes:duration>{{ @item.duration }}</itunes:duration>

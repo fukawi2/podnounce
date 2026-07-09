@@ -113,14 +113,13 @@ Class Episode extends Controller {
       // Delete the media record once the episode is deleted, otherwise we get a fkey constraint error
       $db_media->load(array('media_id=?', $media_id));
       if (!$db_media->dry()) {
-        /* check if this is the only record in the media table that points to
-         * this file on disk. if so, it is safe to remove it from disk.
-         * otherwise we need to leave it on disk for the other media records
+        /* check if this is the only record that points to this stored object
+         * (in the same backend). if so, it is safe to remove it from storage;
+         * otherwise we need to leave it in place for the other media records.
          */
-        if ($db_media->count(array('fname_on_disk=?', $db_media->fname_on_disk)) == 1) {
-          $fname = $f3->get('UPLOADS').$db_media->fname_on_disk;
-          if (file_exists($fname))
-            unlink($fname);
+        if ($db_media->count(array('fname_on_disk=? AND storage_location=?',
+              $db_media->fname_on_disk, $db_media->storage_location)) == 1) {
+          Storage::forLocation($db_media->storage_location)->delete($db_media->fname_on_disk);
         }
         $db_media->erase();
       }
@@ -160,6 +159,20 @@ Class Episode extends Controller {
     $db_media->load(array('media_id=?', $db_episode->media_id));
     if ($db_media->dry())
       $f3->error(500, 'media_id not set');
+
+    $storage = Storage::forLocation($db_media->storage_location);
+
+    /* For object-store backends we don't proxy the bytes through the app;
+     * instead we bump the download counter and redirect the client to the
+     * object's public URL. The friendly download filename was baked into the
+     * object's Content-Disposition metadata when it was uploaded.
+     */
+    if ($storage->name() !== 'local') {
+      $db_media->download_count++;
+      $db_media->save();
+      $f3->reroute($storage->url($db_media->fname_on_disk), false);
+      return;
+    }
 
     // check the file still exists on disk
     $src_filename = $f3->get('UPLOADS').$db_media->fname_on_disk;

@@ -11,3 +11,29 @@ dbname=REPLACE_ME
 username=REPLACE_ME
 password=REPLACE_ME
 locale=en_us.utf8
+
+;
+; Media storage backend.
+;   local = store uploaded media on the local filesystem (the 'uploads/' dir)
+;   s3    = store uploaded media in an S3-compatible object store (see [s3])
+; Existing media keeps working regardless of this setting; each media record
+; remembers where it lives. This only controls where NEW uploads are written.
+;
+[storage]
+driver=local
+
+;
+; Connection details for an S3-compatible object store. Only used when
+; storage.driver=s3 (or when migrating existing media to s3). Works with any
+; provider that speaks the S3 API.
+;
+[s3]
+; Base endpoint URL of the service, eg https://<region>.example-objects.com
+endpoint=REPLACE_ME
+region=REPLACE_ME
+bucket=REPLACE_ME
+access_key=REPLACE_ME
+secret_key=REPLACE_ME
+; false: virtual-hosted-style URLs (https://<bucket>.<endpoint>/<key>)
+; true:  path-style URLs          (https://<endpoint>/<bucket>/<key>)
+use_path_style=false

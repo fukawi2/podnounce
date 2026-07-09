@@ -124,7 +124,8 @@ CREATE TABLE media (
     media_bytes bigint NOT NULL,
     mime_type text NOT NULL,
     download_count bigint,
-    duration interval
+    duration interval,
+    storage_location text DEFAULT 'local'::text NOT NULL
 );
 
 

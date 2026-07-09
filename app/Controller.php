@@ -167,28 +167,19 @@ class Controller {
     $db_media->media_bytes  = $uploadfile['size'];
     $db_media->mime_type    = $uploadfile['type'];
 
-    // relative path and filename to save the file on disk
-    $savepath = sprintf('%s%s',
-      $f3->get('UPLOADS'),
-      $db_media->fname_on_disk
-    );
-
     // if this is an audio file, determine duration and add to the media record
+    // (calculated from the uploaded temp file, which is always local)
     if (in_array($db_media->mime_type, array('audio/mpeg', 'audio/mp3')))
       $db_media->duration = $this->CalculateMediaDuration($tmpname);
 
-    /* Because we hash the file and save it to disk using the hash as the
-     * filename, there is a small chance that the file already exists in our
-     * storage (eg, the same episode published to multiple shows). So check
-     * if there is already a file on disk with the same hash; if not, move the
-     * uploaded file in to place. Then return the media_id to the caller.
+    /* Hand the file to the configured storage backend, recording which backend
+     * it lives in against the media record. Because the key is a content hash,
+     * the backend transparently de-duplicates: the same file published to
+     * multiple shows is only stored once. Return the media_id to the caller.
      */
-    if (is_file($savepath)) {
-      // file already exists on disk; use the existing copy!
-      $db_media->save();
-      return $db_media->media_id;
-    } elseif (move_uploaded_file($tmpname, $savepath)) {
-      // move the uploaded file into place
+    $storage = Storage::instance();
+    $db_media->storage_location = $storage->name();
+    if ($storage->put($tmpname, $fname_on_disk, $db_media->mime_type, $db_media->fname_nice)) {
       $db_media->save();
       return $db_media->media_id;
     }
@@ -205,7 +196,11 @@ class Controller {
   }
 
 
-  // this is a static function so it can be called from within templates
+  /* Returns a fully-qualified, publicly fetchable URL for a media record,
+   * resolved via whichever storage backend that record lives in. Returns null
+   * if the media_id is unknown. This is a static function so it can be called
+   * from within templates.
+   */
   public static function GetMediaURLByID($media_id) {
     $f3 = Base::instance();
     $db_media = new DB\SQL\Mapper($f3->get('DB'), 'media');
@@ -214,7 +209,7 @@ class Controller {
     if ($db_media->dry())
       return null;
 
-    return ($f3->get('UPLOADS') . $db_media->fname_on_disk);
+    return Storage::forLocation($db_media->storage_location)->url($db_media->fname_on_disk);
   }
 
 
